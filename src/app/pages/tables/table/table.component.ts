@@ -5,16 +5,13 @@ import { Product } from '../../../pages/dominio/product';
 import { ProductService } from '../../../pages/services/product.service';
 import { TableModule } from 'primeng/table';
 import { Dialog } from 'primeng/dialog';
-import { Ripple } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { CommonModule } from '@angular/common';
-import { FileUpload } from 'primeng/fileupload';
 import { SelectModule } from 'primeng/select';
 import { RadioButton } from 'primeng/radiobutton';
-import { Rating } from 'primeng/rating';
 import { InputNumber } from 'primeng/inputnumber';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -23,6 +20,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { MultiSelectModule } from 'primeng/multiselect';
+
 interface Column {
   field: string;
   header: string;
@@ -49,9 +47,7 @@ interface ExportColumn {
     InputTextModule,
     TextareaModule,
     CommonModule,
-    FileUpload,
     RadioButton,
-    Rating,
     InputTextModule,
     FormsModule,
     InputNumber,
@@ -63,6 +59,7 @@ interface ExportColumn {
   styleUrl: './table.component.scss',
 })
 export class TableComponent implements OnInit {
+  dialogHeader: string = '';
   representatives!: [];
   productDialog: boolean = false;
 
@@ -87,8 +84,6 @@ export class TableComponent implements OnInit {
   products!: Product[];
 
   product!: Product;
-
-  expandedRows = {};
 
   selectedProducts!: Product[] | null;
 
@@ -119,33 +114,16 @@ export class TableComponent implements OnInit {
     return event.target.value;
   }
 
-  // expandAll() {
-  //   this.expandedRows = this.products.reduce(
-  //     (acc, p) => (acc[p.id] = true) && acc,
-  //     {}
-  //   );
-  // }
+  openNew() {
+    this.dialogHeader = 'Registrar Empresa';
+    this.product = {}; // inicializa un nuevo objeto
+    this.productDialog = true;
+  }
 
-  // onRowExpand(event: TableRowExpandEvent) {
-  //   this.messageService.add({
-  //     severity: 'info',
-  //     summary: 'Product Expanded',
-  //     detail: event.data.name,
-  //     life: 3000,
-  //   });
-  // }
-
-  // onRowCollapse(event: TableRowCollapseEvent) {
-  //   this.messageService.add({
-  //     severity: 'success',
-  //     summary: 'Product Collapsed',
-  //     detail: event.data.name,
-  //     life: 3000,
-  //   });
-  // }
-
-  collapseAll() {
-    this.expandedRows = {};
+  editProduct(product: any) {
+    this.dialogHeader = 'Editar Empresa';
+    this.product = { ...product };
+    this.productDialog = true;
   }
 
   loadDemoData() {
@@ -172,17 +150,6 @@ export class TableComponent implements OnInit {
       title: col.header,
       dataKey: col.field,
     }));
-  }
-
-  openNew() {
-    this.product = {};
-    this.submitted = false;
-    this.productDialog = true;
-  }
-
-  editProduct(product: Product) {
-    this.product = { ...product };
-    this.productDialog = true;
   }
 
   deleteSelectedProducts() {

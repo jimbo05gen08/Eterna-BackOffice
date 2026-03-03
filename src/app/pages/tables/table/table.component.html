@@ -64,22 +64,22 @@
         </ng-template>
         <ng-template #header>
             <tr>
-                <th style="width: 3rem;font-size: smaller;padding: 5px 10px !important;">
+                <th style="width: 6rem;font-size: smaller;padding: 5px 10px !important;">
                     <p-tableHeaderCheckbox />
                 </th>
 
-                <th style="width: 6rem;font-size: smaller;padding: 5px 10px !important;" pSortableColumn="name" >
+                <th style="min-width: 6rem;font-size: smaller;padding: 5px 10px !important;text-align: center;" pSortableColumn="name" >
                     RUC
                     <p-sortIcon  field="name" />
                 </th>
-                <th pSortableColumn="name" style="width: 12rem;font-size: smaller;padding: 5px 10px !important;">Razón Social
+                <th pSortableColumn="name" style="min-width: 8rem;font-size: smaller;padding: 5px 10px !important;text-align: center;">Razón Social
                     <p-sortIcon field="name" />
                 </th>
-                <th pSortableColumn="price" style="width: 12rem;padding: 5px 10px !important;font-size: smaller">
+                <th pSortableColumn="price" style="min-width: 12rem;padding: 5px 10px !important;font-size: smaller;text-align: center;">
                     Nombre Comercial
                     <p-sortIcon field="price" />
                 </th>
-                <th pSortableColumn="category" style="min-width:10rem;font-size: smaller;padding: 5px 10px !important;">
+                <th pSortableColumn="category" style="min-width:12rem;font-size: smaller;padding: 5px 10px !important;">
                     Correo Contacto
                     <p-sortIcon field="category" />
                 </th>
@@ -117,9 +117,9 @@
                 <td style="width: 3rem;font-size:13px;padding: 5px 10px !important;">
                     <p-tableCheckbox  styleClass="!w-[15px] !h-[15px]"  [value]="product" />
                 </td>
-                <td style="width: 4rem;font-size:13px;padding: 5px 10px !important;">{{ product.code }}</td>
-                <td style="width: 12rem;font-size:13px;padding: 5px 10px !important;">{{ product.name }}</td>
-                <td style="width: 12rem;font-size:13px;padding: 5px 10px !important;">
+                <td style="min-width: 6rem;font-size:13px;padding: 5px 10px !important;">{{ product.code }}</td>
+                <td style="min-width: 8rem;;font-size:13px;padding: 5px 10px !important;">{{ product.name }}</td>
+                <td style="min-width: 12rem;font-size:13px;padding: 5px 10px !important;">
                     {{product.description}}               </td>
                 <td style="font-size:13px;padding: 5px 10px !important;">{{product.empresa }}</td>
                 <td style="font-size:13px;padding: 5px 10px !important;">{{ product.category }}</td>
@@ -139,10 +139,10 @@
         </ng-template> -->
     </p-table>
 
-    <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true">
+    <p-dialog [(visible)]="productDialog" [style]="{ width: '450px', 'padding' : '10px !important' }"  [header]="dialogHeader" [modal]="true">
         <ng-template #content>
-            <div class="flex flex-col gap-6">
-                <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-4" *ngIf="product.image" />
+            <div class="flex flex-col gap-6 ">
+                
                 <div>
                     <label for="name" class="block font-bold mb-3">Name</label>
                     <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus fluid />
