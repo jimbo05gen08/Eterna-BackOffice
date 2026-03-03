@@ -5,6 +5,15 @@
    <div>
     <p-button icon="pi pi-bars" (click)="visibleSidebar = true"> </p-button>
 <p-sidebar [(visible)]="visibleSidebar" position="left" [baseZIndex]="10000">
+
+  <div style="display: flex;margin-bottom: 10px;">
+  <p-avatar label="J" styleClass="mr-1" [style]="{ 'background-color': '#07341f', color: 'white', 'padding':'20px' }" shape="circle" />
+    <div style="margin-left: 5px;">
+    <label for=""> Jimmy Obregón Sánchez</label>
+    <label for=""> Administrador</label>
+    </div>
+    </div>
+
   <h3 style="margin-bottom: 10px;">Menú de Navegación</h3>
   <ul>
     <li><a routerLink="/home">
