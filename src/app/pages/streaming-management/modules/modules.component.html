@@ -1,0 +1,83 @@
+<div class="card">
+  <div class="font-semibold text-xl mb-4">Gestión de Módulos</div>
+  <p-table [value]="modules()" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }" [expandedRowKeys]="expandedRows">
+    <ng-template #caption>
+      <button pButton class="button-primary" icon="pi pi-fw {{ isExpanded ? 'pi-minus' : 'pi-plus' }}" label="{{ isExpanded ? 'Colapsar Todos' : 'Expandir Todos' }}" (click)="expandAll()"></button>
+      <div class="flex table-header"></div>
+    </ng-template>
+    <ng-template #header>
+      <tr>
+        <th style="width: 5rem"></th>
+        <th pSortableColumn="nombreComercial">Nombre Comercial <p-sortIcon field="nombreComercial" /></th>
+        <th pSortableColumn="modulo">Módulo <p-sortIcon field="modulo" /></th>
+        <th pSortableColumn="zona">Zona <p-sortIcon field="zona" /></th>
+        <th pSortableColumn="ubicacion">Ubicación <p-sortIcon field="ubicacion" /></th>
+        <th pSortableColumn="cantCamaras">Cant. Cámaras <p-sortIcon field="cantCamaras" /></th>
+        <th pSortableColumn="estado">Estado <p-sortIcon field="estado" /></th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-modulo let-expanded="expanded">
+      <tr>
+        <td>
+          <p-button type="button" pRipple [pRowToggler]="modulo" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+        </td>
+        <td>{{ modulo.nombreComercial }}</td>
+        <td>{{ modulo.modulo }}</td>
+        <td>{{ modulo.zona }}</td>
+        <td>{{ modulo.ubicacion }}</td>
+        <td>
+          <span class="font-bold">{{ modulo.cantCamaras }}</span>
+        </td>
+        <td>
+          <p-tag [value]="modulo.estado" [severity]="modulo.estado === 'Activo' ? 'success' : 'danger'" />
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #expandedrow let-modulo>
+      <tr>
+        <td colspan="7">
+          <div class="p-4 bg-gray-50">
+            <h5 class="mb-3 text-lg font-semibold">Cámaras instaladas en {{ modulo.modulo }}</h5>
+            <p-table [value]="modulo.camaras" dataKey="codigo" responsiveLayout="scroll">
+              <ng-template #header>
+                <tr>
+                  <th pSortableColumn="codigo">Código <p-sortIcon field="codigo" /></th>
+                  <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre" /></th>
+                  <th pSortableColumn="ipPublica">IP Pública <p-sortIcon field="ipPublica" /></th>
+                  <th pSortableColumn="urlPublica">URL Pública <p-sortIcon field="urlPublica" /></th>
+                  <th pSortableColumn="estado">Estado <p-sortIcon field="estado" /></th>
+                  <th style="width: 4rem"></th>
+                </tr>
+              </ng-template>
+              <ng-template #body let-camara>
+                <tr>
+                  <td>{{ camara.codigo }}</td>
+                  <td>{{ camara.nombre }}</td>
+                  <td>{{ camara.ipPublica }}</td>
+                  <td>
+                    <a [href]="camara.urlPublica" target="_blank" class="text-blue-600 hover:underline">
+                      {{ camara.urlPublica }}
+                    </a>
+                  </td>
+                  <td>
+                    <p-tag [value]="camara.estado" [severity]="camara.estado === 'Activo' ? 'success' : 'warn'" />
+                  </td>
+                  <td>
+                    <p-button type="button" icon="pi pi-video" [rounded]="true" [outlined]="true" />
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template #emptymessage>
+                <tr>
+                  <td colspan="6">No hay cámaras registradas para este módulo aún.</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

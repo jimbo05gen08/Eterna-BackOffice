@@ -1,0 +1,106 @@
+<p-toolbar class="mb-6">
+  <ng-template #start>
+    <button pButton label="Nuevo" icon="pi pi-plus" class="mr-2 button-primary" (onClick)="openNew()"></button>
+    <p-button severity="danger" label="Eliminar" icon="pi pi-trash" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedServices || !selectedServices.length" />
+  </ng-template>
+
+  <ng-template #end>
+    <p-button label="Exportar" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+  </ng-template>
+</p-toolbar>
+<p-table
+  #dt
+  [value]="services()"
+  [rows]="10"
+  [columns]="cols"
+  [paginator]="true"
+  [globalFilterFields]="['servicio', 'descripcion']"
+  [tableStyle]="{ 'min-width': '75rem' }"
+  [(selection)]="selectedServices"
+  [rowHover]="true"
+  dataKey="id"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} servicios"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+>
+  <ng-template #caption>
+    <div class="flex items-center justify-between">
+      <h5 class="m-0">Gestión de Servicios de Empresa</h5>
+      <p-iconfield>
+        <p-inputicon class="pi pi-search" />
+        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
+      </p-iconfield>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
+      <th pSortableColumn="servicio">Servicio<p-sortIcon field="servicio" /></th>
+      <th pSortableColumn="descripcion">Descripción<p-sortIcon field="descripcion" /></th>
+      <th pSortableColumn="estado">
+        Estado
+        <p-sortIcon field="estado" />
+      </th>
+      <th pSortableColumn="fechaActivacion">
+        Fecha Activación
+        <p-sortIcon field="fechaActivacion" />
+      </th>
+      <th style="min-width: 8rem"></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-service>
+    <tr>
+      <td style="width: 3rem">
+        <p-tableCheckbox [value]="service" />
+      </td>
+      <td style="min-width: 16rem">{{ service.servicio }}</td>
+      <td style="min-width: 12rem">{{ service.descripcion}}</td>
+      <td style="min-width: 12rem">{{ service.estado}}</td>
+      <td style="min-width: 12rem">{{ service.fechaActivacion}}</td>
+      <td>
+        <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (click)="editProduct(service)" />
+        <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteProduct(service)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="serviceDialog" [style]="{ width: '450px' }" header="Detalles de Empresa" [modal]="true">
+  <ng-template #content>
+    <div class="flex flex-col gap-6">
+      <div>
+        <label class="block font-bold mb-3">Servicio</label>
+        <input type="text" pInputText [(ngModel)]="service.servicio" required fluid />
+        @if (submitted && !service.servicio) {
+        <small class="text-red-500">El Servicio es obligatorio</small>
+        }
+      </div>
+      <div>
+        <label class="block font-bold mb-3">Descripción</label>
+        <input type="text" pInputText [(ngModel)]="service.descripcion" required fluid />
+        @if (submitted && !service.descripcion) {
+        <small class="text-red-500">La Descripción es obligatoria</small>
+        }
+      </div>
+      <div>
+        <label class="block font-bold mb-3">Estado</label>
+        <input type="text" pInputText [(ngModel)]="service.estado" required fluid />
+        @if (submitted && !service.estado) {
+        <small class="text-red-500">El Estado es obligatorio</small>
+        }
+      </div>
+      <div>
+        <label class="block font-bold mb-3">Fecha de Activación</label>
+        <input type="email" pInputText [(ngModel)]="service.fechaActivacion" required fluid />
+        @if (submitted && !service.fechaActivacion) {
+        <small class="text-red-500">La Fecha de Activación es obligatoria</small>
+        }
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #footer>
+    <p-button label="Cancelar" icon="pi pi-times" text (click)="hideDialog()" />
+    <p-button label="Guardar" icon="pi pi-check" (click)="saveProduct()" />
+  </ng-template>
+</p-dialog>
+<p-confirmdialog [style]="{ width: '450px' }" />

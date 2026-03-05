@@ -1,0 +1,137 @@
+/* You can add global styles to this file, and also import other style files */
+@use 'primeicons/primeicons.css';
+@use '@/assets/layout/layout.scss';
+@use '@/assets/demo/demo.scss';
+
+.p-panelmenu-header-content,
+.p-panelmenu-header-content:hover,
+.p-panelmenu-item-content,
+.p-panelmenu-item-content:hover {
+    background-color: transparent !important
+}
+
+.p-panelmenu-panel {
+    background: transparent !important;
+    border-style: hidden;
+    border-color: transparent !important;
+}
+
+.button-primary {
+    background-color: #073620 !important;
+    border-color: transparent !important;
+}
+
+.text-primary {
+    color: #073620;
+}
+
+.p-inputtext:enabled:focus {
+    border-color: #073620 !important;
+}
+
+.active-link {
+    border-radius: 5px;
+    background-color: #0c6110
+}
+
+body {
+    background-color: #eefbf2;
+}
+
+.custom-hover:hover {
+    background-color: #0c6110;
+    border-radius: 5px;
+}
+
+/* Estilos para los links del menú */
+.custom-hover {
+    border-radius: 8px;
+    margin: 2px 8px;
+    /* Espaciado lateral para que el hover no toque los bordes */
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Clase para el link activo (donde el usuario se encuentra) */
+.active-link {
+    background-color: #0c6110 !important;
+    /* Usa tu verde #073620 */
+    color: white !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+/* Ajustes específicos para el modo Slim de Sakai */
+.layout-static-inactive {
+    .layout-sidebar {
+        width: 70px !important;
+
+        .custom-hover {
+            margin: 4px;
+            /* Ajuste de margen en modo mini */
+            padding: 12px 0 !important;
+            /* Centrado vertical perfecto */
+        }
+
+        /* Ocultar flechas nativas de PrimeNG que puedan sobrar */
+        .p-panelmenu-icon {
+            display: none !important;
+        }
+    }
+}
+
+/* Sobrescribir comportamiento de Sakai para modo Mini Sidebar */
+@media (min-width: 992px) {
+    .layout-wrapper.layout-static-inactive {
+        .layout-sidebar {
+            transform: translateX(0) !important;
+            /* Evita que se oculte */
+            width: 70px;
+            /* Ancho para mostrar solo iconos */
+            transition: width 0.2s;
+
+            /* Ocultar textos de los menús de Eterna */
+            .layout-menuitem-text,
+            .p-panelmenu-icon,
+            .layout-menuitem-root-text {
+                display: none !important;
+            }
+
+            /* Centrar los iconos de gestión */
+            .layout-menuitem-icon {
+                margin-right: 0 !important;
+            }
+        }
+
+        /* Ajustar el contenedor de las tablas (Murales/Pantallas) */
+        .layout-main-container {
+            margin-left: 70px !important;
+            transition: margin-left 0.2s;
+        }
+    }
+
+    /* Estado cuando el mouse está encima del menú colapsado */
+    .layout-wrapper.layout-static-inactive {
+        .layout-sidebar:hover {
+            width: 250px !important;
+            /* Ancho original de Eterna */
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+
+            /* Volvemos a mostrar los textos de las opciones */
+            .layout-menuitem-text,
+            .p-panelmenu-icon,
+            .layout-menuitem-root-text {
+                display: inline-block !important;
+            }
+
+            /* Alineamos de nuevo a la izquierda para lectura normal */
+            .flex.items-center {
+                justify-content: flex-start !important;
+                padding-left: 1rem !important;
+            }
+
+            span.ml-3 {
+                display: inline-block !important;
+            }
+        }
+    }
+}

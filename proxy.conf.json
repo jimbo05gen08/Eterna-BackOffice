@@ -1,0 +1,8 @@
+{
+  "/Auth": {
+    "target": "https://apidev.eternamemorias.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

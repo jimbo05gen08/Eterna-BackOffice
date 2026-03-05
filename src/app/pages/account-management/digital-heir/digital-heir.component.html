@@ -1,0 +1,150 @@
+<p-toolbar class="mb-6">
+  <ng-template #start>
+    <button pButton label="Nuevo" icon="pi pi-plus" class="mr-2 button-primary" (onClick)="openNew()"></button>
+    <p-button severity="danger" label="Eliminar" icon="pi pi-trash" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedHeirs || !selectedHeirs.length" />
+  </ng-template>
+
+  <ng-template #end>
+    <p-button label="Exportar" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+  </ng-template>
+</p-toolbar>
+<p-table
+  #dt
+  [value]="digitalHeirs()"
+  [rows]="10"
+  [columns]="cols"
+  [paginator]="true"
+  [globalFilterFields]="['razonSocial', 'nombreComercial', 'ruc']"
+  [tableStyle]="{ 'min-width': '75rem' }"
+  [(selection)]="selectedHeirs"
+  [rowHover]="true"
+  dataKey="id"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+>
+  <ng-template #caption>
+    <div class="flex items-center justify-between">
+      <h5 class="m-0">Gestión de Murales</h5>
+      <p-iconfield>
+        <p-inputicon class="pi pi-search" />
+        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
+      </p-iconfield>
+    </div>
+  </ng-template>
+
+  <ng-template #header>
+    <tr>
+      <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
+      <th pSortableColumn="nombreComercial">Nombre Comercial <p-sortIcon field="nombreComercial" /></th>
+      <th pSortableColumn="docTitularBase">Doc Titular Base <p-sortIcon field="docTitularBase" /></th>
+      <th pSortableColumn="nombreTitularBase">Nombre Titular Base <p-sortIcon field="nombreTitularBase" /></th>
+      <th pSortableColumn="docHeredero">Doc Heredero <p-sortIcon field="docHeredero" /></th>
+      <th pSortableColumn="nombreHeredero">Nombre Heredero <p-sortIcon field="nombreHeredero" /></th>
+      <th pSortableColumn="correoHeredero">Correo Heredero <p-sortIcon field="correoHeredero" /></th>
+      <th pSortableColumn="telefonoHeredero">Teléfono Heredero <p-sortIcon field="telefonoHeredero" /></th>
+      <th pSortableColumn="fechaRegistro">Fecha Registro <p-sortIcon field="fechaRegistro" /></th>
+      <th style="min-width: 5rem">Acciones</th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-item>
+    <tr>
+      <td>
+        <p-tableCheckbox [value]="item" />
+      </td>
+      <td style="min-width: 10rem">{{ item.nombreComercial }}</td>
+      <td style="min-width: 10rem">{{ item.docTitularBase }}</td>
+      <td style="min-width: 12rem">{{ item.nombreTitularBase }}</td>
+      <td style="min-width: 10rem">{{ item.docHeredero }}</td>
+      <td style="min-width: 12rem">{{ item.nombreHeredero }}</td>
+      <td style="min-width: 12rem">
+        <a [href]="'mailto:' + item.correoHeredero" class="text-blue-600 hover:underline">
+          {{ item.correoHeredero }}
+        </a>
+      </td>
+      <td style="min-width: 10rem">{{ item.telefonoHeredero }}</td>
+      <td style="min-width: 10rem">{{ item.fechaRegistro | date: 'dd/MM/yyyy' }}</td>
+      <td>
+        <div class="flex gap-2">
+          <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="success" (click)="editProduct(item)" />
+          <p-button icon="pi pi-trash" [rounded]="true" [outlined]="true" severity="danger" (click)="deleteProduct(item)" />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="heiDialog" [style]="{ width: '600px' }" header="Gestión de Heredero Digital" [modal]="true">
+  <ng-template #content>
+    <div class="flex flex-col gap-5">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-bold mb-2 text-sm text-secondary">Nombre Comercial</label>
+          <input type="text" pInputText [(ngModel)]="digitalHeir.nombreComercial" fluid readonly class="bg-gray-50" />
+        </div>
+        <div>
+          <label class="block font-bold mb-2 text-sm text-secondary">Fecha Registro</label>
+          <p-calendar [(ngModel)]="digitalHeir.fechaRegistro" dateFormat="dd/mm/yy" [disabled]="true" fluid />
+        </div>
+      </div>
+
+      <p-divider align="left" type="dashed">
+        <b>Titular Base</b>
+      </p-divider>
+
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-4">
+          <label class="block font-bold mb-2">Documento Titular</label>
+          <input type="text" pInputText [(ngModel)]="digitalHeir.docTitularBase" placeholder="DNI - 00000000" required fluid />
+        </div>
+        <div class="col-span-8">
+          <label class="block font-bold mb-2">Nombre Titular</label>
+          <input type="text" pInputText [(ngModel)]="digitalHeir.nombreTitularBase" required fluid />
+        </div>
+      </div>
+
+      <p-divider align="left" type="dashed">
+        <b class="text-primary">Datos del Heredero</b>
+      </p-divider>
+
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-4">
+          <label class="block font-bold mb-2">Doc. Heredero</label>
+          <input type="text" pInputText [(ngModel)]="digitalHeir.docHeredero" placeholder="DNI - 00000000" required fluid />
+        </div>
+        <div class="col-span-8">
+          <label class="block font-bold mb-2">Nombre Completo</label>
+          <input type="text" pInputText [(ngModel)]="digitalHeir.nombreHeredero" required fluid />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-bold mb-2">Correo Electrónico</label>
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+            <input type="email" pInputText [(ngModel)]="digitalHeir.correoHeredero" placeholder="ejemplo@correo.com" required fluid />
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold mb-2">Teléfono / WhatsApp</label>
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-whatsapp"></i></span>
+            <input type="text" pInputText [(ngModel)]="digitalHeir.telefonoHeredero" placeholder="51959595959" required fluid />
+          </div>
+        </div>
+      </div>
+
+      @if (submitted && (!digitalHeir.nombreHeredero || !digitalHeir.correoHeredero)) {
+        <small class="text-red-500 font-bold">* Por favor, complete los campos obligatorios del heredero.</small>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Cancelar" icon="pi pi-times" text (click)="hideDialog()" />
+    <p-button label="Guardar Cambios" icon="pi pi-save" severity="success" (click)="saveMural()" />
+  </ng-template>
+</p-dialog>
+<p-confirmdialog [style]="{ width: '450px' }" />

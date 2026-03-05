@@ -1,0 +1,78 @@
+<div class="card">
+  <div class="font-semibold text-xl mb-4">Gestión de Salones Velatorios</div>
+  <p-table [value]="funeralHalls()" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }" [expandedRowKeys]="expandedRows">
+    <ng-template #caption>
+      <button pButton class="button-primary" icon="pi pi-fw {{ isExpanded ? 'pi-minus' : 'pi-plus' }}" label="{{ isExpanded ? 'Colapsar Todos' : 'Expandir Todos' }}" (click)="expandAll()"></button>
+      <div class="flex table-header"></div>
+    </ng-template>
+
+    <ng-template #header>
+      <tr>
+        <th style="width: 5rem"></th>
+        <th pSortableColumn="nombreComercial">Nombre Comercial <p-sortIcon field="nombreComercial" /></th>
+        <th pSortableColumn="salonVelatorio">Salón Velatorio <p-sortIcon field="salonVelatorio" /></th>
+        <th pSortableColumn="zona">Zona <p-sortIcon field="zona" /></th>
+        <th pSortableColumn="ubicacion">Ubicación <p-sortIcon field="ubicacion" /></th>
+        <th pSortableColumn="cantPantallas">Cant. Pantallas <p-sortIcon field="cantPantallas" /></th>
+        <th style="width: 8rem">Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-hall let-expanded="expanded">
+      <tr>
+        <td>
+          <p-button type="button" pRipple [pRowToggler]="hall" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+        </td>
+        <td>{{ hall.nombreComercial }}</td>
+        <td>{{ hall.salonVelatorio }}</td>
+        <td>{{ hall.zona }}</td>
+        <td>{{ hall.ubicacion }}</td>
+        <td>
+          <span class="font-bold">{{ hall.cantPantallas }}</span>
+        </td>
+        <td>
+          <p-button type="button" icon="pi pi-desktop" [rounded]="true" [outlined]="true" />
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #expandedrow let-hall>
+      <tr>
+        <td colspan="7">
+          <div class="p-4 bg-gray-50 border-round shadow-1">
+            <h5 class="mb-3 text-lg font-semibold">Pantallas en {{ hall.salonVelatorio }}</h5>
+            <p-table [value]="hall.pantallas" dataKey="codigo">
+              <ng-template #header>
+                <tr>
+                  <th pSortableColumn="codigo">Código <p-sortIcon field="codigo" /></th>
+                  <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre" /></th>
+                  <th pSortableColumn="tipoPantalla">Tipo Pantalla <p-sortIcon field="tipoPantalla" /></th>
+                  <th pSortableColumn="estado">Estado <p-sortIcon field="estado" /></th>
+                  <th style="width: 4rem"></th>
+                </tr>
+              </ng-template>
+              <ng-template #body let-pantalla>
+                <tr>
+                  <td>{{ pantalla.codigo }}</td>
+                  <td>{{ pantalla.nombre }}</td>
+                  <td>{{ pantalla.tipoPantalla }}</td>
+                  <td>
+                    <p-tag [value]="pantalla.estado" [severity]="pantalla.estado === 'Activo' ? 'success' : 'warn'" />
+                  </td>
+                  <td>
+                    <p-button type="button" icon="pi pi-desktop" [rounded]="true" [outlined]="true" />
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template #emptymessage>
+                <tr>
+                  <td colspan="5">No hay pantallas registradas para este salón.</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

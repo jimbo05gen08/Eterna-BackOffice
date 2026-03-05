@@ -1,0 +1,44 @@
+<div class="layout-topbar">
+    <div class="layout-topbar-logo-container">
+        <button
+            class="layout-menu-button layout-topbar-action"
+            (click)="layoutService.onMenuToggle()"
+        >
+            <i class="pi pi-bars"></i>
+        </button>
+        <a class="layout-topbar-logo" routerLink="/">
+            <img src="group.png" alt="" width="25px" />
+            <span>Eterna BackOffice</span>
+        </a>
+    </div>
+
+    <div class="layout-topbar-actions">
+        <div class="layout-config-menu">
+            <button
+                type="button"
+                class="layout-topbar-action"
+                (click)="toggleDarkMode()"
+            >
+                <i
+                    [ngClass]="{'pi': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme()}"
+                ></i>
+            </button>
+
+            <p-overlaybadge value="2" styleClass="layout-topbar-action">
+                <i class="pi pi-bell" style="font-size: 1.5rem"></i>
+            </p-overlaybadge>
+
+            <p-overlaybadge
+                severity="success"
+                styleClass="layout-topbar-action"
+            >
+                <i class="pi pi-envelope" style="font-size: 1.5rem"></i>
+            </p-overlaybadge>
+        </div>
+
+        <button type="button" class="layout-topbar-action">
+            <i class="pi pi-user"></i>
+            <span class="ml-2 hidden lg:inline">Profile</span>
+        </button>
+    </div>
+</div>
