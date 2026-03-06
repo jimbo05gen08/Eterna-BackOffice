@@ -1,3 +1,10 @@
+@font-face {
+    font-family: "GothamExtraLight";
+    src: url("../fonts/Gotham\ Extra\ Light.otf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 html {
     height: 100%;
     font-size: 14px;
@@ -5,7 +12,7 @@ html {
 }
 
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: "GothamExtraLight";
     color: var(--text-color);
     background-color: var(--surface-ground);
     margin: 0;

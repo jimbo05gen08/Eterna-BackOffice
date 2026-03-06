@@ -5,17 +5,26 @@ import { CommonModule } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
 import { LayoutService } from '@/app/layout/service/layout.service';
 import { OverlayBadge } from 'primeng/overlaybadge';
+import { AvatarModule } from 'primeng/avatar';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
     selector: 'app-topbar',
     standalone: true,
-    imports: [RouterModule, CommonModule, StyleClassModule, OverlayBadge],
+    imports: [
+        RouterModule,
+        CommonModule,
+        StyleClassModule,
+        OverlayBadge,
+        AvatarModule,
+        TieredMenuModule,
+        ButtonModule,
+    ],
     templateUrl: './app.topbar.html',
     styleUrl: './app.topbar.scss',
 })
 export class AppTopbar {
-    items!: MenuItem[];
-
     layoutService = inject(LayoutService);
 
     toggleDarkMode() {
@@ -23,5 +32,48 @@ export class AppTopbar {
             ...state,
             darkTheme: !state.darkTheme,
         }));
+    }
+
+    items!: MenuItem[] | undefined;
+
+    ngOnInit() {
+        this.items = [
+            {
+                label: 'Perfil',
+                icon: 'pi pi-user',
+                items: [
+                    {
+                        label: 'Ver perfil',
+                        icon: 'pi pi-user',
+                    },
+                    {
+                        label: 'Configuración',
+                        icon: 'pi pi-cog',
+                    },
+                ],
+            },
+            {
+                label: 'Ayuda',
+                icon: 'pi pi-info-circle',
+                items: [
+                    {
+                        label: 'Ayuda',
+                        icon: 'pi pi-copy',
+                    },
+                    {
+                        label: 'Soporte',
+                        icon: 'pi pi-times',
+                    },
+                ],
+            },
+
+            {
+                separator: true,
+            },
+            {
+                label: 'Cerrar Sesión',
+                icon: 'pi pi-sign-out',
+            },
+        ];
     }
 }
