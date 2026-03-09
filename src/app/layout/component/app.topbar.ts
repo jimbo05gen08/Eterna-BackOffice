@@ -47,6 +47,10 @@ export class AppTopbar {
                         icon: 'pi pi-user',
                     },
                     {
+                        label: 'Cambiar contraseña',
+                        icon: 'pi pi-user',
+                    },
+                    {
                         label: 'Configuración',
                         icon: 'pi pi-cog',
                     },
@@ -66,7 +70,6 @@ export class AppTopbar {
                     },
                 ],
             },
-
             {
                 separator: true,
             },

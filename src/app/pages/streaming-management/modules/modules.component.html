@@ -93,9 +93,24 @@
             <tr>
                 <td colspan="7">
                     <div class="p-4 bg-gray-50">
-                        <h5 class="mb-3 text-lg font-semibold">
-                            Cámaras instaladas en {{ modulo.modulo }}
-                        </h5>
+                        <div style="display: flex">
+                            <h5 class="mb-3 text-lg font-semibold">
+                                Cámaras instaladas en {{ modulo.modulo }}
+                            </h5>
+                            <div style="margin-left: auto">
+                                <p-button
+                                    label="Nuevo"
+                                    icon="pi pi-plus"
+                                    class="mr-2"
+                                    (onClick)="openNew()"
+                                />
+                                <p-button
+                                    label="Exportar"
+                                    icon="pi pi-upload"
+                                    severity="secondary"
+                                />
+                            </div>
+                        </div>
                         <p-table
                             [value]="modulo.camaras"
                             dataKey="codigo"
