@@ -31,12 +31,19 @@ export class ForgetPassword {
     email: string = '';
     password: string = '';
     checked: boolean = false;
+    show1: boolean = true;
+    show2: boolean = false;
 
     layoutService = inject(LayoutService);
     authService = inject(AuthService);
     messageService = inject(MessageService);
     router = inject(Router);
     loading = false;
+
+    show2View() {
+        this.show1 = false;
+        this.show2 = true;
+    }
 
     login() {
         this.loading = true; // Activa el spinner en el botón
