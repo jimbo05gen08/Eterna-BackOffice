@@ -1,0 +1,36 @@
+/* Contenedor del texto y la flecha */
+.menu-content-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  max-width: 500px;
+  /* Un valor lo suficientemente grande */
+}
+
+/* Estado cuando el sidebar está colapsado */
+.menu-content-collapsed {
+  max-width: 0;
+  opacity: 0;
+  margin-left: 0;
+  pointer-events: none;
+  /* Evita clics accidentales mientras está oculto */
+}
+
+/* La flecha y su rotación */
+.arrow-icon {
+  transition: transform 0.3s ease;
+}
+
+.arrow-expanded {
+  transform: rotate(180deg);
+}
+
+.truncate-text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
