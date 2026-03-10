@@ -7,8 +7,12 @@
             <i class="pi pi-bars"></i>
         </button>
         <a class="layout-topbar-logo" routerLink="/">
-            <img src="group.png" alt="" width="25px" />
-            <span>Eterna BackOffice</span>
+            <img
+                src="../../../assets/eterna-assets/logo_verde.svg"
+                alt=""
+                width="100px"
+            />
+            <span>BackOffice</span>
         </a>
     </div>
 
@@ -36,9 +40,36 @@
             </p-overlaybadge>
         </div>
 
-        <button type="button" class="layout-topbar-action">
-            <i class="pi pi-user"></i>
-            <span class="ml-2 hidden lg:inline">Profile</span>
-        </button>
+        <div
+            style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 20px;
+                cursor: pointer;
+            "
+            class="user-menu"
+            (click)="menu.toggle($event)"
+            class="user-menu-trigger"
+        >
+            <p-avatar
+                [style]="{ 'background-color': '#073620', color: 'white' }"
+                label="J"
+                shape="circle"
+                size="large"
+            >
+            </p-avatar>
+
+            <div class="user-info" style="margin-left: 10px">
+                <div class="user-name" style="font-weight: bold">
+                    Jimmy Obregón
+                </div>
+                <div class="user-role" style="font-size: smaller">
+                    Administrador
+                </div>
+            </div>
+
+            <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
+        </div>
     </div>
 </div>

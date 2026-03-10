@@ -1,13 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
-@use 'primeicons/primeicons.css';
-@use '@/assets/layout/layout.scss';
-@use '@/assets/demo/demo.scss';
+@use "primeicons/primeicons.css";
+@use "@/assets/layout/layout.scss";
+@use "@/assets/demo/demo.scss";
 
 .p-panelmenu-header-content,
 .p-panelmenu-header-content:hover,
 .p-panelmenu-item-content,
 .p-panelmenu-item-content:hover {
-    background-color: transparent !important
+    background-color: transparent !important;
 }
 
 .p-panelmenu-panel {
@@ -31,7 +31,7 @@
 
 .active-link {
     border-radius: 5px;
-    background-color: #0c6110
+    background-color: #0c6110;
 }
 
 body {

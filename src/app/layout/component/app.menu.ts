@@ -34,6 +34,10 @@ export class AppMenu {
                     },
                 ],
             },
+            {
+                label: 'Cerrar Sesión',
+                icon: 'pi pi-sign-out',
+            },
         ];
 
         this.options = [
