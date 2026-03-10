@@ -3,6 +3,14 @@
 @use "@/assets/layout/layout.scss";
 @use "@/assets/demo/demo.scss";
 
+body {
+    background-color: #eefbf2;
+}
+
+.app-dark>body {
+    background-color: #222222;
+}
+
 .p-panelmenu-header-content,
 .p-panelmenu-header-content:hover,
 .p-panelmenu-item-content,
@@ -16,9 +24,8 @@
     border-color: transparent !important;
 }
 
-.button-primary {
-    background-color: #073620 !important;
-    border-color: transparent !important;
+.app-dark>*>.text-primary {
+    color: #c7b66d;
 }
 
 .text-primary {
@@ -29,13 +36,11 @@
     border-color: #073620 !important;
 }
 
-.active-link {
+.p-panelmenu-item-link-active {
     border-radius: 5px;
-    background-color: #0c6110;
-}
-
-body {
-    background-color: #eefbf2;
+    background-color: #0c6110 !important;
+    color: white !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
 .custom-hover:hover {
@@ -43,20 +48,9 @@ body {
     border-radius: 5px;
 }
 
-/* Estilos para los links del menú */
 .custom-hover {
-    border-radius: 8px;
     margin: 2px 8px;
-    /* Espaciado lateral para que el hover no toque los bordes */
     color: rgba(255, 255, 255, 0.8);
-}
-
-/* Clase para el link activo (donde el usuario se encuentra) */
-.active-link {
-    background-color: #0c6110 !important;
-    /* Usa tu verde #073620 */
-    color: white !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
 /* Ajustes específicos para el modo Slim de Sakai */

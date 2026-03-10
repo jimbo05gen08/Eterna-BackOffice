@@ -1,5 +1,17 @@
 @use "mixins" as *;
 
+.app-dark .layout-topbar .layout-topbar-action {
+    color: #c7b66d !important;
+}
+
+.p-overlaybadge .p-badge {
+    color: white !important;
+}
+
+.layout-topbar .layout-topbar-action:hover {
+    color: #073620 !important;
+}
+
 .layout-topbar {
     position: fixed;
     height: 4rem;
@@ -28,12 +40,6 @@
         font-weight: 500;
         gap: 0.5rem;
         margin-left: 20px;
-
-        span {
-            margin-top: 5px;
-            font-weight: bold;
-            color: #073620;
-        }
 
         &:focus-visible {
             @include focused();
@@ -101,6 +107,7 @@
     .user-menu-trigger {
         display: none !important;
     }
+
     .layout-topbar {
         padding: 0 2rem;
 
@@ -171,7 +178,7 @@
     }
 
     .config-panel-colors {
-        > div {
+        >div {
             padding-top: 0.5rem;
             display: flex;
             gap: 0.5rem;

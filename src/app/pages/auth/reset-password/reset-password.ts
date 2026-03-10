@@ -1,7 +1,7 @@
 import { AuthService } from "@/app/core/services/auth.service";
 import { LayoutService } from "@/app/layout/service/layout.service";
-import { Component, inject } from "@angular/core";
-import { Router, RouterModule } from "@angular/router";
+import { Component, inject, OnInit } from "@angular/core";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { MessageService } from "primeng/api";
 import { FormsModule } from "@angular/forms";
 import { ButtonModule } from "primeng/button";
@@ -25,20 +25,32 @@ import { ToastModule } from "primeng/toast";
     CommonModule,
     ToastModule,
   ],
-  templateUrl: "./forget-password.html",
-  styleUrl: "./forget-password.scss",
+  templateUrl: "./reset-password.html",
+  styleUrl: "./reset-password.scss",
   providers: [MessageService],
 })
-export class ForgetPassword {
+export class ResetPassword implements OnInit {
+  //https://miapp.com/reset-password?email=luis.ventura.labrin%40gmail.com&token=wI_uxYAs7h9LP2wj1Uhio4PoSJqCk_1CDG57RhGkiTY
+  token: string = "";
   email: string = "";
   password: string = "";
+  confirmPassword: string = "";
   checked: boolean = false;
 
   layoutService = inject(LayoutService);
-  authService = inject(AuthService);
-  messageService = inject(MessageService);
-  router = inject(Router);
-  loading = false;
+  private authService = inject(AuthService);
+  private messageService = inject(MessageService);
+  private router = inject(Router);
+  private loading = false;
+  private activatedRoute = inject(ActivatedRoute);
+
+  ngOnInit(): void {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      this.token = params.get("token") || "";
+      this.email = params.get("email") || "";
+      console.log(this.token, this.email);
+    });
+  }
 
   resetPassword() {
     this.loading = true;
@@ -65,16 +77,7 @@ export class ForgetPassword {
         });
 
         setTimeout(() => {
-          const link = document.createElement("a");
-          //https://miapp.com/reset-password?email=luis.ventura.labrin%40gmail.com&token=wI_uxYAs7h9LP2wj1Uhio4PoSJqCk_1CDG57RhGkiTY
-          const url = (res.data.forgotlink as string).replace(
-            "https://miapp.com",
-            "http://localhost:4200/auth",
-          );
-          link.href = url; // Define el destino
-          link.target = "_blank"; // Opcional: abre en pestaña nueva
-          document.body.appendChild(link);
-          link.click(); // Simula el clic
+          this.router.navigate(["/"], {});
         }, 3000);
       },
       error: (err) => {

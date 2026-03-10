@@ -1,75 +1,67 @@
 <div class="layout-topbar">
-    <div class="layout-topbar-logo-container">
-        <button
-            class="layout-menu-button layout-topbar-action"
-            (click)="layoutService.onMenuToggle()"
-        >
-            <i class="pi pi-bars"></i>
-        </button>
-        <a class="layout-topbar-logo" routerLink="/">
-            <img
-                src="../../../assets/eterna-assets/logo_verde.svg"
-                alt=""
-                width="100px"
-            />
-            <span>BackOffice</span>
-        </a>
+  <div class="layout-topbar-logo-container">
+    <button
+      class="layout-menu-button layout-topbar-action"
+      (click)="layoutService.onMenuToggle()"
+    >
+      <i class="pi pi-bars"></i>
+    </button>
+    <a class="layout-topbar-logo" routerLink="/">
+      <img
+        [src]="layoutService.isDarkTheme() ? '../../../assets/eterna-assets/logo_amarillo.svg' : '../../../assets/eterna-assets/logo_verde.svg'"
+        alt=""
+        width="100px"
+      />
+    </a>
+  </div>
+
+  <div class="layout-topbar-actions">
+    <div class="layout-config-menu">
+      <button
+        type="button"
+        class="layout-topbar-action"
+        (click)="toggleDarkMode()"
+      >
+        <i
+          [ngClass]="{'pi': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme()}"
+        ></i>
+      </button>
+
+      <p-overlaybadge value="2" styleClass="layout-topbar-action">
+        <i class="pi pi-bell" style="font-size: 1.5rem"></i>
+      </p-overlaybadge>
+
+      <p-overlaybadge styleClass="layout-topbar-action">
+        <i class="pi pi-envelope" style="font-size: 1.5rem"></i>
+      </p-overlaybadge>
     </div>
 
-    <div class="layout-topbar-actions">
-        <div class="layout-config-menu">
-            <button
-                type="button"
-                class="layout-topbar-action"
-                (click)="toggleDarkMode()"
-            >
-                <i
-                    [ngClass]="{'pi': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme()}"
-                ></i>
-            </button>
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 20px;
+        cursor: pointer;
+      "
+      class="user-menu"
+      (click)="menu.toggle($event)"
+      class="user-menu-trigger"
+    >
+      <p-avatar
+        [style]="{ 'background-color': '#073620', color: 'white' }"
+        label="J"
+        shape="circle"
+        size="large"
+      >
+      </p-avatar>
 
-            <p-overlaybadge value="2" styleClass="layout-topbar-action">
-                <i class="pi pi-bell" style="font-size: 1.5rem"></i>
-            </p-overlaybadge>
+      <div class="user-info" style="margin-left: 10px">
+        <div class="user-name" style="font-weight: bold">Jimmy Obregón</div>
+        <div class="user-role" style="font-size: smaller">Administrador</div>
+      </div>
 
-            <p-overlaybadge
-                severity="success"
-                styleClass="layout-topbar-action"
-            >
-                <i class="pi pi-envelope" style="font-size: 1.5rem"></i>
-            </p-overlaybadge>
-        </div>
-
-        <div
-            style="
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-left: 20px;
-                cursor: pointer;
-            "
-            class="user-menu"
-            (click)="menu.toggle($event)"
-            class="user-menu-trigger"
-        >
-            <p-avatar
-                [style]="{ 'background-color': '#073620', color: 'white' }"
-                label="J"
-                shape="circle"
-                size="large"
-            >
-            </p-avatar>
-
-            <div class="user-info" style="margin-left: 10px">
-                <div class="user-name" style="font-weight: bold">
-                    Jimmy Obregón
-                </div>
-                <div class="user-role" style="font-size: smaller">
-                    Administrador
-                </div>
-            </div>
-
-            <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
-        </div>
+      <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
     </div>
+  </div>
 </div>
