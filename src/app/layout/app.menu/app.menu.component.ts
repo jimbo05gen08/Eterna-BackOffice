@@ -3,15 +3,15 @@ import { CommonModule } from "@angular/common";
 import { Router, RouterModule } from "@angular/router";
 import { MenuItem } from "primeng/api";
 import { PanelMenu } from "primeng/panelmenu";
-import { LayoutService } from "../service/layout.service";
 import { TooltipModule } from "primeng/tooltip";
+import { LayoutService } from "../../core/services/layout.service";
 
 @Component({
   selector: "app-menu",
   standalone: true,
   imports: [CommonModule, PanelMenu, RouterModule, TooltipModule],
-  templateUrl: "./app.menu.html",
-  styleUrl: "./app.menu.scss",
+  templateUrl: "./app.menu.component.html",
+  styleUrl: "./app.menu.component.scss",
 })
 export class AppMenu {
   router = inject(Router);

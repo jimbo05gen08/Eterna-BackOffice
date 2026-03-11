@@ -1,19 +1,15 @@
 .layout-topbar-actions {
     display: flex;
     align-items: center;
-    /* Alinea verticalmente al centro */
     gap: 1rem;
-    /* Da espacio uniforme entre iconos */
 }
 
 .layout-config-menu {
     display: flex;
     align-items: center;
     gap: 2rem;
-    /* Espacio entre el sol, la campana y el sobre */
 }
 
-/* Ajuste para los badges de PrimeNG */
 p-overlaybadge {
     display: inline-flex;
     align-items: center;

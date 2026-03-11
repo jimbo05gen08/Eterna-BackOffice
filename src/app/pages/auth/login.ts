@@ -7,7 +7,7 @@ import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
 import { RippleModule } from "primeng/ripple";
 import { CommonModule } from "@angular/common";
-import { LayoutService } from "@/app/layout/service/layout.service";
+import { LayoutService } from "@/app/core/services/layout.service";
 import { AuthService } from "@/app/core/services/auth.service";
 import { MessageService } from "primeng/api";
 import { ToastModule } from "primeng/toast";

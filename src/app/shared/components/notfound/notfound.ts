@@ -1,4 +1,4 @@
-import { AppFloatingConfigurator } from "@/app/layout/component/app.floatingconfigurator";
+import { AppFloatingConfigurator } from "@/app/layout/app.floatingconfigurator";
 import { Component } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { ButtonModule } from "primeng/button";
@@ -56,10 +56,10 @@ import { ButtonModule } from "primeng/button";
             <h1
               class="text-surface-900 dark:text-surface-0 font-bold text-3xl lg:text-5xl mb-2"
             >
-              Not Found
+              No encontrado
             </h1>
             <div class="text-surface-600 dark:text-surface-200 mb-8">
-              Requested resource is not available.
+              Lo sentimos, la página que estás buscando no existe.
             </div>
             <a
               routerLink="/"
@@ -74,11 +74,11 @@ import { ButtonModule } from "primeng/button";
               <span class="ml-6 flex flex-col">
                 <span
                   class="text-surface-900 dark:text-surface-0 lg:text-xl font-medium mb-0 block"
-                  >Frequently Asked Questions</span
+                  >Ruta Incorrecta</span
                 >
-                <span class="text-surface-600 dark:text-surface-200 lg:text-xl"
-                  >Ultricies mi quis hendrerit dolor.</span
-                >
+                <span class="text-surface-600 dark:text-surface-200 lg:text-xl">
+                  ¿La ruta a la que desea acceder es correcta?
+                </span>
               </span>
             </a>
             <a
@@ -94,11 +94,13 @@ import { ButtonModule } from "primeng/button";
               <span class="ml-6 flex flex-col">
                 <span
                   class="text-surface-900 dark:text-surface-0 lg:text-xl font-medium mb-0"
-                  >Solution Center</span
                 >
-                <span class="text-surface-600 dark:text-surface-200 lg:text-xl"
-                  >Phasellus faucibus scelerisque eleifend.</span
-                >
+                  Centro de Soluciones
+                </span>
+                <span class="text-surface-600 dark:text-surface-200 lg:text-xl">
+                  Puede contactar al siguiente correo para reportar problemas
+                  técnicos.
+                </span>
               </span>
             </a>
             <a
@@ -114,11 +116,12 @@ import { ButtonModule } from "primeng/button";
               <span class="ml-6 flex flex-col">
                 <span
                   class="text-surface-900 dark:text-surface-0 lg:text-xl font-medium mb-0"
-                  >Permission Manager</span
+                  >Permisos para Acceder</span
                 >
-                <span class="text-surface-600 dark:text-surface-200 lg:text-xl"
-                  >Accumsan in nisl nisi scelerisque</span
-                >
+                <span class="text-surface-600 dark:text-surface-200 lg:text-xl">
+                  Asegúrese que su perfil tenga los permisos necesarios para
+                  acceder al recurso solicitado.
+                </span>
               </span>
             </a>
             <p-button label="Go to Dashboard" routerLink="/" />
