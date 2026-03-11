@@ -86,6 +86,34 @@
         </td>
       </tr>
     </ng-template>
+    <ng-template #body let-modulo let-expanded="expanded">
+      <tr>
+        <td>
+          <p-button
+            type="button"
+            pRipple
+            [pRowToggler]="modulo"
+            [text]="true"
+            [rounded]="true"
+            [plain]="true"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          />
+        </td>
+        <td>{{ modulo.nombreComercial }}</td>
+        <td>{{ modulo.modulo }}</td>
+        <td>{{ modulo.zona }}</td>
+        <td>{{ modulo.ubicacion }}</td>
+        <td>
+          <span class="font-bold">{{ modulo.cantCamaras }}</span>
+        </td>
+        <td>
+          <p-tag
+            [value]="modulo.estado"
+            [severity]="modulo.estado === 'Activo' ? 'success' : 'danger'"
+          />
+        </td>
+      </tr>
+    </ng-template>
 
     <ng-template #expandedrow let-modulo>
       <tr>

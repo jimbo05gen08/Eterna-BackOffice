@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { AppLayout } from "./app/layout/component/app.layout";
+import { AppLayout } from "./app/layout/app.layout";
 import { Dashboard } from "./app/pages/dashboard/dashboard";
 import { Notfound } from "./app/shared/components/notfound/notfound";
 

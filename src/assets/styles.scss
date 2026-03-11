@@ -24,7 +24,7 @@ body {
     border-color: transparent !important;
 }
 
-.app-dark>*>.text-primary {
+.app-dark .text-primary {
     color: #c7b66d;
 }
 
@@ -36,9 +36,9 @@ body {
     border-color: #073620 !important;
 }
 
-.p-panelmenu-item-link-active {
+.active-link {
     border-radius: 5px;
-    background-color: #0c6110 !important;
+    background-color: #07550b !important;
     color: white !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
@@ -53,19 +53,15 @@ body {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* Ajustes específicos para el modo Slim de Sakai */
 .layout-static-inactive {
     .layout-sidebar {
         width: 70px !important;
 
-        .custom-hover {
+        .no-padding-x {
             margin: 4px;
-            /* Ajuste de margen en modo mini */
             padding: 12px 0 !important;
-            /* Centrado vertical perfecto */
         }
 
-        /* Ocultar flechas nativas de PrimeNG que puedan sobrar */
         .p-panelmenu-icon {
             display: none !important;
         }

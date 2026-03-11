@@ -1,5 +1,5 @@
 import { AuthService } from "@/app/core/services/auth.service";
-import { LayoutService } from "@/app/layout/service/layout.service";
+import { LayoutService } from "@/app/core/services/layout.service";
 import { Component, inject } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
 import { MessageService } from "primeng/api";
