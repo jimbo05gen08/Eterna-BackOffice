@@ -1,10 +1,25 @@
 <div class="card">
-  <div class="font-semibold text-xl mb-4">Gestión de Cuentas</div>
+  <div class="flex items-center justify-between">
+    <h5 class="m-0">Gestión de Cuentas</h5>
+    <p-iconfield>
+      <p-inputicon class="pi pi-search" />
+      <input
+        pInputText
+        type="text"
+        (input)="onGlobalFilter(dt, $event)"
+        placeholder="Buscar..."
+      />
+    </p-iconfield>
+  </div>
   <p-table
     [value]="accounts()"
     dataKey="id"
     [tableStyle]="{ 'min-width': '60rem' }"
     [expandedRowKeys]="expandedRows"
+    [paginator]="true"
+    [rows]="10"
+    [totalRecords]="accounts.length"
+    [lazy]="true"
   >
     <ng-template #caption>
       <div class="flex table-header">
@@ -180,6 +195,13 @@
           </div>
         </td>
       </tr>
+    </ng-template>
+    <ng-template #paginatorleft let-state>
+      <span>
+        Mostrando {{ 1 }} al
+        {{ 1 }}
+        de {{ 1 }} cuentas
+      </span>
     </ng-template>
   </p-table>
 </div>
