@@ -58,21 +58,21 @@
   <ng-template #header>
     <tr>
       <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
-      <th pSortableColumn="servicio">
-        Servicio<p-sortIcon field="servicio" />
+      <th style="text-align: center" pSortableColumn="servicio">
+        Servicio <p-sortIcon field="servicio" />
       </th>
-      <th pSortableColumn="descripcion">
-        Descripción<p-sortIcon field="descripcion" />
+      <th style="text-align: center" pSortableColumn="descripcion">
+        Descripción <p-sortIcon field="descripcion" />
       </th>
-      <th pSortableColumn="estado">
+      <th style="text-align: center" pSortableColumn="estado">
         Estado
         <p-sortIcon field="estado" />
       </th>
-      <th pSortableColumn="fechaActivacion">
+      <th style="text-align: center" pSortableColumn="fechaActivacion">
         Fecha Activación
         <p-sortIcon field="fechaActivacion" />
       </th>
-      <th style="min-width: 8rem"></th>
+      <th style="min-width: 8rem; text-align: center">Acción</th>
     </tr>
   </ng-template>
   <ng-template #body let-service>
@@ -80,11 +80,17 @@
       <td style="width: 3rem">
         <p-tableCheckbox [value]="service" />
       </td>
-      <td style="min-width: 16rem">{{ service.servicio }}</td>
-      <td style="min-width: 12rem">{{ service.descripcion}}</td>
-      <td style="min-width: 12rem">{{ service.estado}}</td>
-      <td style="min-width: 12rem">{{ service.fechaActivacion}}</td>
-      <td>
+      <td style="min-width: 5rem; text-align: center">
+        {{ service.servicio }}
+      </td>
+      <td style="min-width: 12rem; text-align: center">
+        {{ service.descripcion}}
+      </td>
+      <td style="min-width: 6rem; text-align: center">{{ service.estado}}</td>
+      <td style="min-width: 6rem; text-align: center">
+        {{ service.fechaActivacion}}
+      </td>
+      <td style="min-width: 6rem; text-align: center">
         <p-button
           icon="pi pi-pencil"
           class="mr-2"

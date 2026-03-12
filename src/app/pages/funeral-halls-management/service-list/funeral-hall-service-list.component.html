@@ -43,7 +43,7 @@
 >
   <ng-template #caption>
     <div class="flex items-center justify-between">
-      <h5 class="m-0">Gestión de Servicios</h5>
+      <h5 class="m-0">Gestión de Servicios Velatorios</h5>
       <p-iconfield>
         <p-inputicon class="pi pi-search" />
         <input
@@ -94,8 +94,8 @@
   <ng-template #body let-service>
     <tr>
       <td><p-tableCheckbox [value]="service" /></td>
-      <td>{{ service.nombreComercial }}</td>
-      <td>{{ service.salonVelatorio }}</td>
+      <td style="min-width: 14rem">{{ service.nombreComercial }}</td>
+      <td style="min-width: 14rem">{{ service.salonVelatorio }}</td>
       <td>{{ service.identificador }}</td>
       <td>{{ service.fechaHoraAtencion | date: "dd/MM/yyyy HH:mm" }}</td>
       <td>{{ service.beneficiario }}</td>

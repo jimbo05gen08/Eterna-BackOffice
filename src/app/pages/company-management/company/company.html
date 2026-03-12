@@ -58,44 +58,50 @@
   <ng-template #header>
     <tr>
       <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
-      <th pSortableColumn="ruc">RUC<p-sortIcon field="ruc" /></th>
-      <th pSortableColumn="razonSocial">
+      <th pSortableColumn="ruc" style="text-align: center">
+        RUC <p-sortIcon field="ruc" />
+      </th>
+      <th style="text-align: center" pSortableColumn="razonSocial">
         Razón Social
         <p-sortIcon field="razonSocial" />
       </th>
-      <th pSortableColumn="nombreComercial">
+      <th style="text-align: center" pSortableColumn="nombreComercial">
         Nombre Comercial
         <p-sortIcon field="nombreComercial" />
       </th>
-      <th pSortableColumn="correoContacto">
+      <th style="text-align: center" pSortableColumn="correoContacto">
         Correo Contacto
         <p-sortIcon field="correoContacto" />
       </th>
-      <th pSortableColumn="telefonoContacto">
+      <th style="text-align: center" pSortableColumn="telefonoContacto">
         Teléfono Contacto
         <p-sortIcon field="telefonoContacto" />
       </th>
-      <th pSortableColumn="direccion">
+      <th style="text-align: center" pSortableColumn="direccion">
         Dirección
         <p-sortIcon field="direccion" />
       </th>
-      <th pSortableColumn="representanteLegal" style="min-width: 13rem">
+      <th
+        style="text-align: center"
+        pSortableColumn="representanteLegal"
+        style="min-width: 13rem"
+      >
         Representante Legal
         <p-sortIcon field="representanteLegal" />
       </th>
-      <th pSortableColumn="url">
+      <th style="text-align: center" pSortableColumn="url">
         URL
         <p-sortIcon field="url" />
       </th>
-      <th pSortableColumn="pais">
+      <th style="text-align: center" pSortableColumn="pais">
         País
         <p-sortIcon field="pais" />
       </th>
-      <th pSortableColumn="estado">
+      <th style="text-align: center" pSortableColumn="estado">
         Estado
         <p-sortIcon field="estado" />
       </th>
-      <th style="min-width: 8rem"></th>
+      <th style="min-width: 8rem; text-align: center">Acción</th>
     </tr>
   </ng-template>
   <ng-template #body let-company>
@@ -103,20 +109,22 @@
       <td style="width: 3rem">
         <p-tableCheckbox [value]="company" />
       </td>
-      <td>{{ company.ruc }}</td>
+      <td style="text-align: center">{{ company.ruc }}</td>
       <td style="min-width: 16rem">{{ company.razonSocial }}</td>
-      <td style="min-width: 12rem">{{ company.nombreComercial}}</td>
+      <td style="min-width: 16rem">{{ company.nombreComercial}}</td>
       <td style="min-width: 12rem">{{ company.correoContacto}}</td>
-      <td style="min-width: 12rem">{{ company.telefonoContacto}}</td>
+      <td style="min-width: 16rem; text-align: center">
+        {{ company.telefonoContacto}}
+      </td>
       <td style="min-width: 12rem">{{ company.direccion}}</td>
-      <td style="min-width: 12rem">{{ company.representanteLegal}}</td>
+      <td style="min-width: 16rem">{{ company.representanteLegal}}</td>
       <td style="min-width: 12rem">
         <a class="text-primary" [href]="company.url" target="_blank"
           >{{ company.url}}</a
         >
       </td>
-      <td style="min-width: 12rem">{{ company.pais}}</td>
-      <td style="min-width: 12rem">{{ company.estado}}</td>
+      <td style="min-width: 8rem; text-align: center">{{ company.pais}}</td>
+      <td style="min-width: 8rem; text-align: center">{{ company.estado}}</td>
       <td>
         <p-button
           icon="pi pi-pencil"
