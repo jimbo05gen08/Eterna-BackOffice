@@ -2,11 +2,13 @@ import { Routes } from "@angular/router";
 import { AppLayout } from "./app/layout/app.layout";
 import { Dashboard } from "./app/pages/dashboard/dashboard";
 import { Notfound } from "./app/shared/components/notfound/notfound";
+import { authGuard } from "./app/core/guards/auth.guard";
 
 export const appRoutes: Routes = [
   {
     path: "",
     component: AppLayout,
+    canActivate: [authGuard],
     children: [
       { path: "", component: Dashboard },
       {

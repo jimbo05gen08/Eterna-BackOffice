@@ -1,48 +1,53 @@
 import { AuthService } from "@/app/core/services/auth.service";
-import { LayoutService } from "@/app/core/services/layout.service";
 import { Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
-import { MessageService } from "primeng/api";
 import { FormsModule } from "@angular/forms";
-import { ButtonModule } from "primeng/button";
-import { CheckboxModule } from "primeng/checkbox";
-import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
-import { RippleModule } from "primeng/ripple";
+import { ButtonModule } from "primeng/button";
 import { CommonModule } from "@angular/common";
-import { ToastModule } from "primeng/toast";
+import { AuthLayoutComponent } from "../auth-layout/auth-layout.component";
 
 @Component({
   selector: "app-forget-password",
   imports: [
     ButtonModule,
-    CheckboxModule,
-    InputTextModule,
     PasswordModule,
     FormsModule,
     RouterModule,
-    RippleModule,
     CommonModule,
-    ToastModule,
+    AuthLayoutComponent,
   ],
   templateUrl: "./reset-password.html",
   styleUrl: "./reset-password.scss",
-  providers: [MessageService],
 })
 export class ResetPassword implements OnInit {
-  //https://miapp.com/reset-password?email=luis.ventura.labrin%40gmail.com&token=wI_uxYAs7h9LP2wj1Uhio4PoSJqCk_1CDG57RhGkiTY
   token: string = "";
   email: string = "";
   password: string = "";
   confirmPassword: string = "";
-  checked: boolean = false;
+  submitted = false;
 
-  layoutService = inject(LayoutService);
   private authService = inject(AuthService);
-  private messageService = inject(MessageService);
   private router = inject(Router);
-  private loading = false;
+  loading = false;
   private activatedRoute = inject(ActivatedRoute);
+
+  private readonly passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+
+  get isPasswordStrong(): boolean {
+    return this.passwordRegex.test(this.password);
+  }
+
+  get passwordsMatch(): boolean {
+    return this.password === this.confirmPassword;
+  }
+
+  get isFormValid(): boolean {
+    return (
+      this.isPasswordStrong && this.passwordsMatch && this.password.length > 0
+    );
+  }
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((params) => {
@@ -53,54 +58,24 @@ export class ResetPassword implements OnInit {
   }
 
   resetPassword() {
+    this.submitted = true;
+
+    if (!this.isFormValid) return;
+
     this.loading = true;
 
-    this.authService.resetPassword(this.email).subscribe({
-      next: (res) => {
-        if (res.error) {
-          this.messageService.add({
-            severity: "error",
-            summary: "Error de Autenticación",
-            detail: "Usuario o contraseña incorrectos",
-            sticky: false,
-          });
-          return;
-        }
-        localStorage.setItem("token", res.token);
-
-        // Toast de éxito
-        this.messageService.add({
-          severity: "success",
-          summary: "¡Revisa tu correo!",
-          detail: res.success.mensaje,
-          life: 3000,
-        });
-
-        setTimeout(() => {
-          this.router.navigate(["/"], {});
-        }, 3000);
-      },
-      error: (err) => {
-        this.loading = false;
-
-        // Toast de error
-        this.messageService.add({
-          severity: "error",
-          summary: "Error de Autenticación",
-          detail: "Usuario o contraseña incorrectos",
-          sticky: false,
-        });
-      },
-      complete: () => {
-        this.loading = false;
-      },
-    });
-  }
-
-  toggleDarkMode() {
-    this.layoutService.layoutConfig.update((state) => ({
-      ...state,
-      darkTheme: !state.darkTheme,
-    }));
+    this.authService
+      .resetPassword(this.email, this.token, this.password)
+      .subscribe({
+        next: () => {
+          this.router.navigate(["/auth/login"]);
+        },
+        error: () => {
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 }

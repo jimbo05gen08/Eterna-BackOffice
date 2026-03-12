@@ -5,6 +5,7 @@ import { MenuItem } from "primeng/api";
 import { PanelMenu } from "primeng/panelmenu";
 import { TooltipModule } from "primeng/tooltip";
 import { LayoutService } from "../../core/services/layout.service";
+import { AuthService } from "../../core/services/auth.service";
 
 @Component({
   selector: "app-menu",
@@ -18,6 +19,7 @@ export class AppMenu {
   configurationItems: MenuItem[] = [];
   options: MenuItem[] = [];
   layoutService = inject(LayoutService);
+  private authService = inject(AuthService);
 
   ngOnInit() {
     this.configurationItems = [
@@ -38,6 +40,7 @@ export class AppMenu {
       {
         label: "Cerrar Sesión",
         icon: "pi pi-sign-out",
+        command: () => this.logout(),
       },
     ];
 
@@ -112,5 +115,11 @@ export class AppMenu {
         ],
       },
     ];
+  }
+
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => this.router.navigate(["/auth/login"]),
+    });
   }
 }

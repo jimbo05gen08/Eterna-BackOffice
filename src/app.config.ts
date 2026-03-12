@@ -1,4 +1,8 @@
-import { provideHttpClient, withFetch } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from "@angular/common/http";
 import {
   ApplicationConfig,
   provideZonelessChangeDetection,
@@ -12,6 +16,8 @@ import Aura from "@primeuix/themes/aura";
 import { providePrimeNG } from "primeng/config";
 import { appRoutes } from "./app.routes";
 import { definePreset } from "@primeuix/themes";
+import { MessageService } from "primeng/api";
+import { authInterceptor } from "./app/core/interceptors/auth.interceptor";
 
 const MiTemaPersonalizado = definePreset(Aura, {
   semantic: {
@@ -21,7 +27,7 @@ const MiTemaPersonalizado = definePreset(Aura, {
       200: "#9bafa5",
       300: "#698779",
       400: "#385f4c",
-      500: "#073620", // Tu color principal
+      500: "#073620",
       600: "#06311d",
       700: "#052b19",
       800: "#042013",
@@ -37,20 +43,20 @@ const MiTemaPersonalizado = definePreset(Aura, {
           activeColor: "{primary.700}",
           highlightColor: "{primary.500}",
           highlightInverseColor: "#ffffff",
-          contrastColor: "#ffffff", // <-- Esto asegura el texto blanco en botones
+          contrastColor: "#ffffff",
         },
         surface: {
-          50: "#f4f6f5", // Fondos de página muy claros
-          100: "#e9edea", // Fondos de componentes
-          200: "#d3dcd7", // Bordes de inputs
+          50: "#f4f6f5",
+          100: "#e9edea",
+          200: "#d3dcd7",
           300: "#bdcbc4",
           400: "#a7bab1",
           500: "#91a99e",
-          600: "#738a7f", // Texto secundario
+          600: "#738a7f",
           700: "#566860",
           800: "#3a4540",
-          900: "#1d2320", // Texto principal (casi negro pero con matiz verde)
-          950: "#0e1110", // Fondos en modo oscuro
+          900: "#1d2320",
+          950: "#0e1110",
         },
       },
       dark: {
@@ -61,7 +67,7 @@ const MiTemaPersonalizado = definePreset(Aura, {
           activeColor: "{primary.200}",
           highlightColor: "{primary.400}",
           highlightInverseColor: "#000000",
-          contrastColor: "#000000", // Texto blanco también en modo oscuro
+          contrastColor: "#000000",
         },
       },
     },
@@ -70,6 +76,7 @@ const MiTemaPersonalizado = definePreset(Aura, {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    MessageService,
     provideRouter(
       appRoutes,
       withInMemoryScrolling({
@@ -78,7 +85,7 @@ export const appConfig: ApplicationConfig = {
       }),
       withEnabledBlockingInitialNavigation(),
     ),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideZonelessChangeDetection(),
     providePrimeNG({
       theme: {
