@@ -1,7 +1,7 @@
 export interface Company {
   id: string;
   ruc: string;
-  razonSocial: string;
+  razon_social: string;
   nombreComercial: string;
   correoContacto: string;
   telefonoContacto: string;

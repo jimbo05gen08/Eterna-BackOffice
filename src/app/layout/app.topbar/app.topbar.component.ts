@@ -4,6 +4,8 @@ import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { StyleClassModule } from "primeng/styleclass";
 import { LayoutService } from "@/app/core/services/layout.service";
+import { AuthService } from "@/app/core/services/auth.service";
+import { Router } from "@angular/router";
 import { OverlayBadge } from "primeng/overlaybadge";
 import { AvatarModule } from "primeng/avatar";
 import { TieredMenuModule } from "primeng/tieredmenu";
@@ -26,6 +28,8 @@ import { ButtonModule } from "primeng/button";
 })
 export class AppTopbar {
   layoutService = inject(LayoutService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   toggleDarkMode() {
     this.layoutService.layoutConfig.update((state) => ({
@@ -76,7 +80,14 @@ export class AppTopbar {
       {
         label: "Cerrar Sesión",
         icon: "pi pi-sign-out",
+        command: () => this.logout(),
       },
     ];
+  }
+
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => this.router.navigate(["/auth/login"]),
+    });
   }
 }

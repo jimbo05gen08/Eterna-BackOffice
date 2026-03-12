@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { Access } from "./access";
-import { Login } from "./login";
+import { Login } from "./login/login";
 import { Error } from "./error";
 import { ForgetPassword } from "./forget-password/forget-password";
 import { ResetPassword } from "./reset-password/reset-password";

@@ -166,11 +166,11 @@
         <input
           type="text"
           pInputText
-          [(ngModel)]="company.razonSocial"
+          [(ngModel)]="company.razon_social"
           required
           fluid
         />
-        @if (submitted && !company.razonSocial) {
+        @if (submitted && !company.razon_social) {
         <small class="text-red-500">La Razón Social es obligatoria</small>
         }
       </div>
