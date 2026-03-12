@@ -1,15 +1,30 @@
 <div class="card">
-  <div class="font-semibold text-xl mb-4">Gestión de Módulos</div>
+  <div class="flex items-center justify-between">
+    <h5 class="m-0">Gestión de Módulos</h5>
+    <p-iconfield>
+      <p-inputicon class="pi pi-search" />
+      <input
+        pInputText
+        type="text"
+        (input)="onGlobalFilter(dt, $event)"
+        placeholder="Buscar..."
+      />
+    </p-iconfield>
+  </div>
   <p-table
     [value]="modules()"
     dataKey="id"
     [tableStyle]="{ 'min-width': '60rem' }"
     [expandedRowKeys]="expandedRows"
+    [paginator]="true"
+    [rows]="10"
+    [totalRecords]="modules.length"
   >
     <ng-template #caption>
       <div class="flex table-header">
         <button
           pButton
+          class="button-primary"
           icon="pi pi-fw {{ isExpanded ? 'pi-minus' : 'pi-plus' }}"
           label="{{ isExpanded ? 'Colapsar Todos' : 'Expandir Todos' }}"
           (click)="expandAll()"
@@ -43,6 +58,34 @@
       </tr>
     </ng-template>
 
+    <ng-template #body let-modulo let-expanded="expanded">
+      <tr>
+        <td>
+          <p-button
+            type="button"
+            pRipple
+            [pRowToggler]="modulo"
+            [text]="true"
+            [rounded]="true"
+            [plain]="true"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          />
+        </td>
+        <td>{{ modulo.nombreComercial }}</td>
+        <td>{{ modulo.modulo }}</td>
+        <td>{{ modulo.zona }}</td>
+        <td>{{ modulo.ubicacion }}</td>
+        <td>
+          <span class="font-bold">{{ modulo.cantCamaras }}</span>
+        </td>
+        <td>
+          <p-tag
+            [value]="modulo.estado"
+            [severity]="modulo.estado === 'Activo' ? 'success' : 'danger'"
+          />
+        </td>
+      </tr>
+    </ng-template>
     <ng-template #body let-modulo let-expanded="expanded">
       <tr>
         <td>
@@ -164,6 +207,13 @@
           </div>
         </td>
       </tr>
+    </ng-template>
+    <ng-template #paginatorleft let-state>
+      <span>
+        Mostrando {{ 3 }} al
+        {{ 3 }}
+        de {{ 3 }} módulos
+      </span>
     </ng-template>
   </p-table>
 </div>

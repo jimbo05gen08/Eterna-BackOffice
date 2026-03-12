@@ -1,10 +1,24 @@
 <div class="card">
-  <div class="font-semibold text-xl mb-4">Gestión de Salones Velatorios</div>
+  <div class="flex items-center justify-between">
+    <h5 class="m-0">Gestión de Salones Velatorios</h5>
+    <p-iconfield>
+      <p-inputicon class="pi pi-search" />
+      <input
+        pInputText
+        type="text"
+        (input)="onGlobalFilter(dt, $event)"
+        placeholder="Buscar..."
+      />
+    </p-iconfield>
+  </div>
   <p-table
     [value]="funeralHalls()"
     dataKey="id"
     [tableStyle]="{ 'min-width': '60rem' }"
     [expandedRowKeys]="expandedRows"
+    [paginator]="true"
+    [rows]="10"
+    [totalRecords]="funeralHalls.length"
   >
     <ng-template #caption>
       <div class="flex table-header">
@@ -141,6 +155,13 @@
           </div>
         </td>
       </tr>
+    </ng-template>
+    <ng-template #paginatorleft let-state>
+      <span>
+        Mostrando {{ 3 }} al
+        {{ 3 }}
+        de {{ 3 }} salones velatorios
+      </span>
     </ng-template>
   </p-table>
 </div>
