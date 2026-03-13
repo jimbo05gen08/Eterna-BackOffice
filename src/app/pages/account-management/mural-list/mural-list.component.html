@@ -27,7 +27,7 @@
 >
   <ng-template #caption>
     <div class="flex items-center justify-between">
-      <h5 class="m-0">Gestión de Murales</h5>
+      <h5 class="m-2">Gestión de Murales</h5>
       <p-iconfield>
         <p-inputicon class="pi pi-search" />
         <input
@@ -43,34 +43,36 @@
   <ng-template #header>
     <tr>
       <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
-      <th pSortableColumn="nombreComercial">
+      <th style="text-align: center" pSortableColumn="nombreComercial">
         Nombre Comercial <p-sortIcon field="nombreComercial" />
       </th>
-      <th pSortableColumn="identificador">
+      <th style="text-align: center" pSortableColumn="identificador">
         Identificador <p-sortIcon field="identificador" />
       </th>
-      <th pSortableColumn="beneficiario">
+      <th style="text-align: center" pSortableColumn="beneficiario">
         Beneficiario <p-sortIcon field="beneficiario" />
       </th>
-      <th pSortableColumn="fechaNacimiento">
+      <th style="text-align: center" pSortableColumn="fechaNacimiento">
         Fecha Nacimiento <p-sortIcon field="fechaNacimiento" />
       </th>
-      <th pSortableColumn="fechaDefuncion">
+      <th style="text-align: center" pSortableColumn="fechaDefuncion">
         Fecha Defunción <p-sortIcon field="fechaDefuncion" />
       </th>
-      <th>F Perfil | F Portada</th>
-      <th>Txt Corto | Txt Largo</th>
-      <th pSortableColumn="estadoMural">
+      <th style="text-align: center">F Perfil | F Portada</th>
+      <th style="text-align: center">Txt Corto | Txt Largo</th>
+      <th style="text-align: center" pSortableColumn="estadoMural">
         Estado Mural <p-sortIcon field="estadoMural" />
       </th>
-      <th pSortableColumn="urlPublica">
+      <th style="text-align: center" pSortableColumn="urlPublica">
         Url Publica <p-sortIcon field="urlPublica" />
       </th>
-      <th pSortableColumn="fechaCreacion">
+      <th style="text-align: center" pSortableColumn="fechaCreacion">
         Fecha Creación <p-sortIcon field="fechaCreacion" />
       </th>
-      <th pSortableColumn="creador">Creador <p-sortIcon field="creador" /></th>
-      <th style="min-width: 8rem">Accion</th>
+      <th style="text-align: center" pSortableColumn="creador">
+        Creador <p-sortIcon field="creador" />
+      </th>
+      <th style="min-width: 8rem; text-align: center">Acción</th>
     </tr>
   </ng-template>
 
@@ -79,12 +81,22 @@
       <td>
         <p-tableCheckbox [value]="mural" />
       </td>
-      <td>{{ mural.nombreComercial }}</td>
-      <td>{{ mural.identificador }}</td>
-      <td>{{ mural.beneficiario }}</td>
-      <td>{{ mural.fechaNacimiento | date: "d/MM/yyyy" }}</td>
-      <td>{{ mural.fechaDefuncion | date: "d/MM/yyyy" }}</td>
-      <td class="text-center">
+      <td style="min-width: 14rem; text-align: center">
+        {{ mural.nombreComercial }}
+      </td>
+      <td style="min-width: 12rem; text-align: center">
+        {{ mural.identificador }}
+      </td>
+      <td style="min-width: 16rem; text-align: center">
+        {{ mural.beneficiario }}
+      </td>
+      <td style="min-width: 12rem; text-align: center">
+        {{ mural.fechaNacimiento | date: "d/MM/yyyy" }}
+      </td>
+      <td style="min-width: 12rem; text-align: center">
+        {{ mural.fechaDefuncion | date: "d/MM/yyyy" }}
+      </td>
+      <td style="min-width: 12rem; text-align: center">
         <i
           [class]="
             mural.tienePerfil
@@ -101,7 +113,7 @@
           "
         ></i>
       </td>
-      <td class="text-center">
+      <td style="min-width: 12rem; text-align: center" class="text-center">
         <i
           [class]="
             mural.tieneTxtCorto
@@ -118,8 +130,10 @@
           "
         ></i>
       </td>
-      <td>{{ mural.estadoMural }}</td>
-      <td>
+      <td style="min-width: 12rem; text-align: center">
+        {{ mural.estadoMural }}
+      </td>
+      <td style="min-width: 12rem; text-align: center">
         <a
           [href]="mural.urlPublica"
           target="_blank"
@@ -128,14 +142,17 @@
           {{ mural.urlPublica }}
         </a>
       </td>
-      <td>{{ mural.fechaCreacion | date: "dd/MM/yyyy" }}</td>
-      <td>
-        <div class="flex flex-column">
+      <td style="min-width: 12rem; text-align: center">
+        {{ mural.fechaCreacion | date: "dd/MM/yyyy" }}
+      </td>
+      <td style="min-width: 18rem; text-align: center">
+        <div style="display: block">
           <span class="font-bold">{{ mural.creador }}</span>
+          <br />
           <small class="text-secondary">{{ mural.cuentaCreadora }}</small>
         </div>
       </td>
-      <td>
+      <td style="text-align: center">
         <p-button
           icon="pi pi-file-export"
           [rounded]="true"

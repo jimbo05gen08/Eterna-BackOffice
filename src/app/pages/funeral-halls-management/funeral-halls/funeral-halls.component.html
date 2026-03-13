@@ -19,6 +19,9 @@
     [paginator]="true"
     [rows]="10"
     [totalRecords]="funeralHalls.length"
+    currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} salones velatorios"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]"
   >
     <ng-template #caption>
       <div class="flex table-header">
@@ -38,20 +41,22 @@
     <ng-template #header>
       <tr>
         <th style="width: 5rem"></th>
-        <th pSortableColumn="nombreComercial">
+        <th style="text-align: center" pSortableColumn="nombreComercial">
           Nombre Comercial <p-sortIcon field="nombreComercial" />
         </th>
-        <th pSortableColumn="salonVelatorio">
+        <th style="text-align: center" pSortableColumn="salonVelatorio">
           Salón Velatorio <p-sortIcon field="salonVelatorio" />
         </th>
-        <th pSortableColumn="zona">Zona <p-sortIcon field="zona" /></th>
-        <th pSortableColumn="ubicacion">
+        <th style="text-align: center" pSortableColumn="zona">
+          Zona <p-sortIcon field="zona" />
+        </th>
+        <th style="text-align: center" pSortableColumn="ubicacion">
           Ubicación <p-sortIcon field="ubicacion" />
         </th>
-        <th pSortableColumn="cantPantallas">
+        <th style="text-align: center" pSortableColumn="cantPantallas">
           Cant. Pantallas <p-sortIcon field="cantPantallas" />
         </th>
-        <th style="width: 8rem">Acciones</th>
+        <th style="text-align: center" style="width: 8rem">Acciones</th>
       </tr>
     </ng-template>
 
@@ -68,14 +73,14 @@
             [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
           />
         </td>
-        <td>{{ hall.nombreComercial }}</td>
-        <td>{{ hall.salonVelatorio }}</td>
-        <td>{{ hall.zona }}</td>
-        <td>{{ hall.ubicacion }}</td>
-        <td>
+        <td style="text-align: center">{{ hall.nombreComercial }}</td>
+        <td style="text-align: center">{{ hall.salonVelatorio }}</td>
+        <td style="text-align: center">{{ hall.zona }}</td>
+        <td style="text-align: center">{{ hall.ubicacion }}</td>
+        <td style="text-align: center">
           <span class="font-bold">{{ hall.cantPantallas }}</span>
         </td>
-        <td>
+        <td style="text-align: center">
           <p-button
             type="button"
             icon="pi pi-desktop"
@@ -155,13 +160,6 @@
           </div>
         </td>
       </tr>
-    </ng-template>
-    <ng-template #paginatorleft let-state>
-      <span>
-        Mostrando {{ 3 }} al
-        {{ 3 }}
-        de {{ 3 }} salones velatorios
-      </span>
     </ng-template>
   </p-table>
 </div>

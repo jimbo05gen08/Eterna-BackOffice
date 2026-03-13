@@ -37,13 +37,13 @@
   [(selection)]="selectedServices"
   [rowHover]="true"
   dataKey="id"
-  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} servicios"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} servicios de transmisiones"
   [showCurrentPageReport]="true"
   [rowsPerPageOptions]="[10, 20, 30]"
 >
   <ng-template #caption>
     <div class="flex items-center justify-between">
-      <h5 class="m-0">Gestión de Servicios</h5>
+      <h5 class="m-0">Gestión de Servicios de Transmisiones</h5>
       <p-iconfield>
         <p-inputicon class="pi pi-search" />
         <input
@@ -59,37 +59,43 @@
   <ng-template #header>
     <tr>
       <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
-      <th pSortableColumn="nombreComercial">
+      <th style="text-align: center" pSortableColumn="nombreComercial">
         Nombre Comercial <p-sortIcon field="nombreComercial" />
       </th>
-      <th pSortableColumn="modulo">Módulo <p-sortIcon field="modulo" /></th>
-      <th pSortableColumn="identificador">
+      <th style="text-align: center" pSortableColumn="modulo">
+        Módulo <p-sortIcon field="modulo" />
+      </th>
+      <th style="text-align: center" pSortableColumn="identificador">
         Identificador <p-sortIcon field="identificador" />
       </th>
-      <th pSortableColumn="beneficiario">
+      <th style="text-align: center" pSortableColumn="beneficiario">
         Beneficiario <p-sortIcon field="beneficiario" />
       </th>
-      <th pSortableColumn="fechaHoraAtencion">
+      <th style="text-align: center" pSortableColumn="fechaHoraAtencion">
         Fecha Atención <p-sortIcon field="fechaHoraAtencion" />
       </th>
-      <th pSortableColumn="estadoInvitacion">
+      <th style="text-align: center" pSortableColumn="estadoInvitacion">
         Estado <p-sortIcon field="estadoInvitacion" />
       </th>
-      <th style="min-width: 8rem">Acciones</th>
+      <th style="min-width: 8rem; text-align: center">Acciones</th>
     </tr>
   </ng-template>
 
   <ng-template #body let-service>
     <tr>
       <td><p-tableCheckbox [value]="service" /></td>
-      <td style="min-width: 12rem">{{ service.nombreComercial }}</td>
-      <td style="min-width: 10rem">{{ service.modulo }}</td>
-      <td style="min-width: 12rem">{{ service.identificador }}</td>
+      <td style="min-width: 12rem; text-align: center">
+        {{ service.nombreComercial }}
+      </td>
+      <td style="min-width: 10rem; text-align: center">{{ service.modulo }}</td>
+      <td style="min-width: 12rem; text-align: center">
+        {{ service.identificador }}
+      </td>
       <td style="min-width: 12rem">{{ service.beneficiario }}</td>
-      <td style="min-width: 10rem">
+      <td style="min-width: 10rem; text-align: center">
         {{ service.fechaHoraAtencion | date: "dd/MM/yyyy HH:mm" }}
       </td>
-      <td style="min-width: 8rem">
+      <td style="min-width: 8rem; text-align: center">
         <p-tag
           [value]="service.estadoInvitacion"
           [severity]="
@@ -97,7 +103,7 @@
           "
         />
       </td>
-      <td>
+      <td style="text-align: center">
         <p-button
           icon="pi pi-pencil"
           class="mr-2"

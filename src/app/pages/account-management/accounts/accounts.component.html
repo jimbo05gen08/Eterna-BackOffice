@@ -20,6 +20,9 @@
     [rows]="10"
     [totalRecords]="accounts.length"
     [lazy]="true"
+    currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} cuentas"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]"
   >
     <ng-template #caption>
       <div class="flex table-header">
@@ -39,22 +42,22 @@
     <ng-template #header>
       <tr>
         <th style="width: 5rem"></th>
-        <th pSortableColumn="nombreComercial">
+        <th style="text-align: center" pSortableColumn="nombreComercial">
           Nombre Comercial <p-sortIcon field="nombreComercial" />
         </th>
-        <th pSortableColumn="cuentaCreadora">
+        <th style="text-align: center" pSortableColumn="cuentaCreadora">
           Cuenta Creadora <p-sortIcon field="cuentaCreadora" />
         </th>
-        <th pSortableColumn="creador">
+        <th style="text-align: center" pSortableColumn="creador">
           Creador <p-sortIcon field="creador" />
         </th>
-        <th pSortableColumn="numMurales">
+        <th style="text-align: center" pSortableColumn="numMurales">
           Num Murales <p-sortIcon field="numMurales" />
         </th>
-        <th pSortableColumn="fechaCreacionCuenta">
+        <th style="text-align: center" pSortableColumn="fechaCreacionCuenta">
           Fecha Creación <p-sortIcon field="fechaCreacionCuenta" />
         </th>
-        <th style="width: 10rem">Accion</th>
+        <th style="width: 10rem; text-align: center">Accion</th>
       </tr>
     </ng-template>
 
@@ -71,8 +74,8 @@
             [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
           />
         </td>
-        <td>{{ resumen.nombreComercial }}</td>
-        <td>
+        <td style="text-align: center">{{ resumen.nombreComercial }}</td>
+        <td style="text-align: center">
           <a
             [href]="'mailto:' + resumen.cuentaCreadora"
             class="text-blue-600 hover:underline"
@@ -80,8 +83,8 @@
             {{ resumen.cuentaCreadora }}
           </a>
         </td>
-        <td>{{ resumen.creador }}</td>
-        <td>
+        <td style="text-align: center">{{ resumen.creador }}</td>
+        <td style="text-align: center">
           <div>
             <span class="font-bold">{{ resumen.numMurales }}</span>
             <a
@@ -94,8 +97,10 @@
             ></a>
           </div>
         </td>
-        <td>{{ resumen.fechaCreacionCuenta | date: "dd/MM/yyyy" }}</td>
-        <td>
+        <td style="text-align: center">
+          {{ resumen.fechaCreacionCuenta | date: "dd/MM/yyyy" }}
+        </td>
+        <td style="text-align: center">
           <p-button
             icon="pi pi-file-export"
             size="small"
@@ -194,13 +199,6 @@
           </div>
         </td>
       </tr>
-    </ng-template>
-    <ng-template #paginatorleft let-state>
-      <span>
-        Mostrando {{ 1 }} al
-        {{ 1 }}
-        de {{ 1 }} cuentas
-      </span>
     </ng-template>
   </p-table>
 </div>

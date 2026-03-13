@@ -5,16 +5,19 @@ import { RevenueStreamWidget } from "./components/revenuestreamwidget";
 
 @Component({
   selector: "app-dashboard",
-  imports: [StatsWidget, BestSellingWidget, RevenueStreamWidget],
   template: `
-    <div class="grid grid-cols-12 gap-8">
-      <app-stats-widget class="contents" />
-      <div class="col-span-12 xl:col-span-6">
-        <app-best-selling-widget />
+    <div
+      style="display:flex;justify-content:center;align-items:center;width:100%; height: 600px;position:relative"
+    >
+      <div style="position: absolute;top:100px;text-align:center">
+        <h3>Bienvenido a Eterna BackOffice</h3>
+        <img src="../../../assets/eterna-assets/logo_verde.svg" alt="" />
       </div>
-      <div class="col-span-12 xl:col-span-6">
-        <app-revenue-stream-widget />
-      </div>
+      <img
+        src="../../../assets/eterna-assets/Frame 20-3.png"
+        alt=""
+        width="500px"
+      />
     </div>
   `,
 })
