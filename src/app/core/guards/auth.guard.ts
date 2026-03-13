@@ -45,7 +45,7 @@ export const permissionGuard: CanActivateFn = (route) => {
   const hasPermission = allNodes.some((node) => hasRoute(node, fullPath));
 
   if (!hasPermission) {
-    router.navigate(["/notfound"]);
+    router.navigate(["/forbidden"]);
     return false;
   }
 

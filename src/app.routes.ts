@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { AppLayout } from "./app/layout/app.layout";
 import { Notfound } from "./app/shared/components/notfound/notfound";
+import { Forbidden } from "./app/shared/components/forbidden/forbidden";
 import { authGuard, permissionGuard } from "./app/core/guards/auth.guard";
 
 export const appRoutes: Routes = [
@@ -76,15 +77,21 @@ export const appRoutes: Routes = [
         children: [
           {
             path: "gestion-perfil",
+            canActivate: [permissionGuard],
             loadComponent: () =>
               import("./app/pages/configuration/profile-management/profile-management"),
           },
           {
             path: "gestion-usuario",
+            canActivate: [permissionGuard],
             loadComponent: () =>
               import("./app/pages/configuration/user-management/user-management"),
           },
         ],
+      },
+      {
+        path: "forbidden",
+        component: Forbidden,
       },
     ],
   },

@@ -58,83 +58,116 @@
   <ng-template #header>
     <tr>
       <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
-      <th pSortableColumn="ruc">RUC<p-sortIcon field="ruc" /></th>
-      <th pSortableColumn="razonSocial">
+      <th pSortableColumn="ruc" style="text-align: center">
+        RUC <p-sortIcon field="ruc" />
+      </th>
+      <th style="text-align: center" pSortableColumn="razonSocial">
         Razón Social
         <p-sortIcon field="razonSocial" />
       </th>
-      <th pSortableColumn="nombreComercial">
+      <th style="text-align: center" pSortableColumn="nombreComercial">
         Nombre Comercial
         <p-sortIcon field="nombreComercial" />
       </th>
-      <th pSortableColumn="correoContacto">
+      <!-- <th style="text-align: center" pSortableColumn="correoContacto">
         Correo Contacto
         <p-sortIcon field="correoContacto" />
-      </th>
-      <th pSortableColumn="telefonoContacto">
+      </th> -->
+      <!-- <th style="text-align: center" pSortableColumn="telefonoContacto">
         Teléfono Contacto
         <p-sortIcon field="telefonoContacto" />
-      </th>
-      <th pSortableColumn="direccion">
+      </th> -->
+      <th style="text-align: center" pSortableColumn="direccion">
         Dirección
         <p-sortIcon field="direccion" />
       </th>
-      <th pSortableColumn="representanteLegal" style="min-width: 13rem">
+      <!-- <th
+        style="text-align: center"
+        pSortableColumn="representanteLegal"
+        style="min-width: 13rem"
+      >
         Representante Legal
         <p-sortIcon field="representanteLegal" />
-      </th>
-      <th pSortableColumn="url">
+      </th> -->
+      <th style="text-align: center" pSortableColumn="url">
         URL
         <p-sortIcon field="url" />
       </th>
-      <th pSortableColumn="pais">
+      <th style="text-align: center" pSortableColumn="pais">
         País
         <p-sortIcon field="pais" />
       </th>
-      <th pSortableColumn="estado">
+      <!-- <th style="text-align: center" pSortableColumn="estado">
         Estado
         <p-sortIcon field="estado" />
-      </th>
-      <th style="min-width: 8rem"></th>
+      </th> -->
+      <th style="min-width: 8rem; text-align: center">Acción</th>
     </tr>
   </ng-template>
-  <ng-template #body let-company>
-    <tr>
-      <td style="width: 3rem">
-        <p-tableCheckbox [value]="company" />
-      </td>
-      <td>{{ company.ruc }}</td>
-      <td style="min-width: 16rem">{{ company.razonSocial }}</td>
-      <td style="min-width: 12rem">{{ company.nombreComercial}}</td>
-      <td style="min-width: 12rem">{{ company.correoContacto}}</td>
-      <td style="min-width: 12rem">{{ company.telefonoContacto}}</td>
-      <td style="min-width: 12rem">{{ company.direccion}}</td>
-      <td style="min-width: 12rem">{{ company.representanteLegal}}</td>
-      <td style="min-width: 12rem">
-        <a class="text-primary" [href]="company.url" target="_blank"
-          >{{ company.url}}</a
-        >
-      </td>
-      <td style="min-width: 12rem">{{ company.pais}}</td>
-      <td style="min-width: 12rem">{{ company.estado}}</td>
-      <td>
-        <p-button
-          icon="pi pi-pencil"
-          class="mr-2"
-          [rounded]="true"
-          [outlined]="true"
-          (click)="editProduct(company)"
-        />
-        <p-button
-          icon="pi pi-trash"
-          severity="danger"
-          [rounded]="true"
-          [outlined]="true"
-          (click)="deleteProduct(company)"
-        />
-      </td>
-    </tr>
-  </ng-template>
+  @if (!tableIsLoading) {
+    <ng-template #body let-company>
+      <tr>
+        <td style="width: 3rem">
+          <p-tableCheckbox [value]="company" />
+        </td>
+        <td style="text-align: center">{{ company.ruc }}</td>
+        <td style="min-width: 16rem">{{ company.razon_social }}</td>
+        <td style="min-width: 16rem">{{ company.nombre_comercial }}</td>
+        <!-- <td style="min-width: 12rem">{{ company.correoContacto }}</td> -->
+        <!-- <td style="min-width: 16rem; text-align: center">
+          {{ company.telefonoContacto }}
+        </td> -->
+        <td style="min-width: 20rem">{{ company.direccion }}</td>
+        <!-- <td style="min-width: 16rem">{{ company.representanteLegal }}</td> -->
+        <td style="min-width: 12rem">
+          <a class="text-primary" [href]="company.url_marca" target="_blank">{{
+            company.url_marca
+          }}</a>
+        </td>
+        <td style="min-width: 8rem; text-align: center">
+          {{ company.nombre_pais }}
+        </td>
+        <!-- <td style="min-width: 8rem; text-align: center">
+          {{ company.estado }}
+        </td> -->
+        <td>
+          <p-button
+            icon="pi pi-pencil"
+            class="mr-2"
+            [rounded]="true"
+            [outlined]="true"
+            (click)="editProduct(company)"
+          />
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            [outlined]="true"
+            (click)="deleteProduct(company)"
+          />
+        </td>
+      </tr>
+    </ng-template>
+  } @else {
+    <ng-template #body>
+      @for (item of [1, 2, 3]; track $index) {
+        <tr>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <!-- <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td>
+          <td><p-skeleton /></td> -->
+        </tr>
+      }
+    </ng-template>
+  }
 </p-table>
 
 <p-dialog
@@ -156,7 +189,7 @@
           fluid
         />
         @if (submitted && !company.ruc) {
-        <small class="text-red-500">El RUC es obligatorio</small>
+          <small class="text-red-500">El RUC es obligatorio</small>
         }
       </div>
 
@@ -171,7 +204,7 @@
           fluid
         />
         @if (submitted && !company.razon_social) {
-        <small class="text-red-500">La Razón Social es obligatoria</small>
+          <small class="text-red-500">La Razón Social es obligatoria</small>
         }
       </div>
 
@@ -181,12 +214,12 @@
         <input
           type="text"
           pInputText
-          [(ngModel)]="company.nombreComercial"
+          [(ngModel)]="company.nombre_comercial"
           required
           fluid
         />
-        @if (submitted && !company.nombreComercial) {
-        <small class="text-red-500">El Nombre Comercial es obligatorio</small>
+        @if (submitted && !company.nombre_comercial) {
+          <small class="text-red-500">El Nombre Comercial es obligatorio</small>
         }
       </div>
 
@@ -201,7 +234,7 @@
           fluid
         />
         @if (submitted && !company.correoContacto) {
-        <small class="text-red-500">El correo es obligatorio</small>
+          <small class="text-red-500">El correo es obligatorio</small>
         }
       </div>
 
@@ -216,7 +249,7 @@
           fluid
         />
         @if (submitted && !company.telefonoContacto) {
-        <small class="text-red-500">El teléfono es obligatorio</small>
+          <small class="text-red-500">El teléfono es obligatorio</small>
         }
       </div>
 
@@ -231,7 +264,7 @@
           fluid
         />
         @if (submitted && !company.direccion) {
-        <small class="text-red-500">La dirección es obligatoria</small>
+          <small class="text-red-500">La dirección es obligatoria</small>
         }
       </div>
 
@@ -246,16 +279,16 @@
           fluid
         />
         @if (submitted && !company.representanteLegal) {
-        <small class="text-red-500"
-          >El representante legal es obligatorio</small
-        >
+          <small class="text-red-500"
+            >El representante legal es obligatorio</small
+          >
         }
       </div>
 
       <!-- URL -->
       <div>
         <label class="block font-bold mb-3">URL</label>
-        <input type="text" pInputText [(ngModel)]="company.url" fluid />
+        <input type="text" pInputText [(ngModel)]="company.url_marca" fluid />
       </div>
 
       <!-- País -->
@@ -264,12 +297,12 @@
         <input
           type="text"
           pInputText
-          [(ngModel)]="company.pais"
+          [(ngModel)]="company.nombre_pais"
           required
           fluid
         />
-        @if (submitted && !company.pais) {
-        <small class="text-red-500">El país es obligatorio</small>
+        @if (submitted && !company.nombre_pais) {
+          <small class="text-red-500">El país es obligatorio</small>
         }
       </div>
 
@@ -282,7 +315,7 @@
           <option value="Inactivo">Inactivo</option>
         </select>
         @if (submitted && !company.estado) {
-        <small class="text-red-500">El estado es obligatorio</small>
+          <small class="text-red-500">El estado es obligatorio</small>
         }
       </div>
     </div>

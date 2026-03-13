@@ -59,31 +59,31 @@
   <ng-template #header>
     <tr>
       <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
-      <th pSortableColumn="nombreComercial">
+      <th style="text-align: center" pSortableColumn="nombreComercial">
         Nombre Comercial <p-sortIcon field="nombreComercial" />
       </th>
-      <th pSortableColumn="docTitularBase">
+      <th style="text-align: center" pSortableColumn="docTitularBase">
         Doc Titular Base <p-sortIcon field="docTitularBase" />
       </th>
-      <th pSortableColumn="nombreTitularBase">
+      <th style="text-align: center" pSortableColumn="nombreTitularBase">
         Nombre Titular Base <p-sortIcon field="nombreTitularBase" />
       </th>
-      <th pSortableColumn="docHeredero">
+      <th style="text-align: center" pSortableColumn="docHeredero">
         Doc Heredero <p-sortIcon field="docHeredero" />
       </th>
-      <th pSortableColumn="nombreHeredero">
+      <th style="text-align: center" pSortableColumn="nombreHeredero">
         Nombre Heredero <p-sortIcon field="nombreHeredero" />
       </th>
-      <th pSortableColumn="correoHeredero">
+      <th style="text-align: center" pSortableColumn="correoHeredero">
         Correo Heredero <p-sortIcon field="correoHeredero" />
       </th>
-      <th pSortableColumn="telefonoHeredero">
+      <th style="text-align: center" pSortableColumn="telefonoHeredero">
         Teléfono Heredero <p-sortIcon field="telefonoHeredero" />
       </th>
-      <th pSortableColumn="fechaRegistro">
+      <th style="text-align: center" pSortableColumn="fechaRegistro">
         Fecha Registro <p-sortIcon field="fechaRegistro" />
       </th>
-      <th style="min-width: 5rem">Acciones</th>
+      <th style="min-width: 5rem; text-align: center">Acciones</th>
     </tr>
   </ng-template>
 
@@ -92,12 +92,22 @@
       <td>
         <p-tableCheckbox [value]="item" />
       </td>
-      <td style="min-width: 10rem">{{ item.nombreComercial }}</td>
-      <td style="min-width: 10rem">{{ item.docTitularBase }}</td>
-      <td style="min-width: 12rem">{{ item.nombreTitularBase }}</td>
-      <td style="min-width: 10rem">{{ item.docHeredero }}</td>
-      <td style="min-width: 12rem">{{ item.nombreHeredero }}</td>
-      <td style="min-width: 12rem">
+      <td style="min-width: 14rem; text-align: center">
+        {{ item.nombreComercial }}
+      </td>
+      <td style="min-width: 12rem; text-align: center">
+        {{ item.docTitularBase }}
+      </td>
+      <td style="min-width: 14rem; text-align: center">
+        {{ item.nombreTitularBase }}
+      </td>
+      <td style="min-width: 16rem; text-align: center">
+        {{ item.docHeredero }}
+      </td>
+      <td style="min-width: 14rem; text-align: center">
+        {{ item.nombreHeredero }}
+      </td>
+      <td style="min-width: 14rem; text-align: center">
         <a
           [href]="'mailto:' + item.correoHeredero"
           class="text-blue-600 hover:underline"
@@ -105,11 +115,13 @@
           {{ item.correoHeredero }}
         </a>
       </td>
-      <td style="min-width: 10rem">{{ item.telefonoHeredero }}</td>
-      <td style="min-width: 10rem">
+      <td style="min-width: 14rem; text-align: center">
+        {{ item.telefonoHeredero }}
+      </td>
+      <td style="min-width: 12rem; text-align: center">
         {{ item.fechaRegistro | date: "dd/MM/yyyy" }}
       </td>
-      <td>
+      <td style="text-align: center">
         <div class="flex gap-2">
           <p-button
             icon="pi pi-pencil"

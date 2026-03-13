@@ -11,6 +11,7 @@ import { AuthService } from "@/app/core/services/auth.service";
 import { UserService } from "@/app/core/services/user.service";
 import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { AuthLayoutComponent } from "../auth-layout/auth-layout.component";
+import { filter, switchMap } from "rxjs";
 
 @Component({
   selector: "app-login",
@@ -42,25 +43,16 @@ export class Login {
 
   login() {
     this.loading = true;
-    this.authService.login(this.email, this.password).subscribe({
-      next: (success) => {
-        if (success) {
-          this.userService.getAndStoreCurrentUser().subscribe({
-            next: () => {
-              this.router.navigate(["/"]);
-            },
-            error: () => {
-              this.loading = false;
-            },
-          });
-        }
-      },
-      error: (err) => {
-        this.loading = false;
-      },
-      complete: () => {
-        this.loading = false;
-      },
-    });
+    this.authService
+      .login(this.email, this.password)
+      .pipe(
+        filter((success) => success),
+        switchMap(() => this.userService.getAndStoreCurrentUser()),
+      )
+      .subscribe({
+        next: () => this.router.navigate(["/"]),
+        error: () => (this.loading = false),
+        complete: () => (this.loading = false),
+      });
   }
 }

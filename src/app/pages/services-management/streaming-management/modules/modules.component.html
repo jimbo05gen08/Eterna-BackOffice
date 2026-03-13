@@ -19,23 +19,21 @@
     [paginator]="true"
     [rows]="10"
     [totalRecords]="modules.length"
+    currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} mòdulos"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]"
   >
     <ng-template #caption>
-      <div class="flex table-header">
+      <div class="flex flex-col-reverse sm:flex-row sm:items-center gap-2">
         <button
           pButton
-          class="button-primary"
+          class="button-primary w-full sm:w-auto"
           icon="pi pi-fw {{ isExpanded ? 'pi-minus' : 'pi-plus' }}"
           label="{{ isExpanded ? 'Colapsar Todos' : 'Expandir Todos' }}"
           (click)="expandAll()"
         ></button>
-        <div style="margin-left: auto">
-          <p-button
-            label="Nuevo"
-            icon="pi pi-plus"
-            class="mr-2"
-            (onClick)="openNew()"
-          />
+        <div class="flex justify-center gap-2 sm:justify-end sm:ml-auto">
+          <p-button label="Nuevo" icon="pi pi-plus" (onClick)="openNew()" />
           <p-button label="Exportar" icon="pi pi-upload" severity="secondary" />
         </div>
       </div>
@@ -43,18 +41,24 @@
     <ng-template #header>
       <tr>
         <th style="width: 5rem"></th>
-        <th pSortableColumn="nombreComercial">
+        <th style="text-align: center" pSortableColumn="nombreComercial">
           Nombre Comercial <p-sortIcon field="nombreComercial" />
         </th>
-        <th pSortableColumn="modulo">Módulo <p-sortIcon field="modulo" /></th>
-        <th pSortableColumn="zona">Zona <p-sortIcon field="zona" /></th>
-        <th pSortableColumn="ubicacion">
+        <th style="text-align: center" pSortableColumn="modulo">
+          Módulo <p-sortIcon field="modulo" />
+        </th>
+        <th style="text-align: center" pSortableColumn="zona">
+          Zona <p-sortIcon field="zona" />
+        </th>
+        <th style="text-align: center" pSortableColumn="ubicacion">
           Ubicación <p-sortIcon field="ubicacion" />
         </th>
-        <th pSortableColumn="cantCamaras">
+        <th style="text-align: center" pSortableColumn="cantCamaras">
           Cant. Cámaras <p-sortIcon field="cantCamaras" />
         </th>
-        <th pSortableColumn="estado">Estado <p-sortIcon field="estado" /></th>
+        <th style="text-align: center" pSortableColumn="estado">
+          Estado <p-sortIcon field="estado" />
+        </th>
       </tr>
     </ng-template>
 
@@ -71,14 +75,16 @@
             [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
           />
         </td>
-        <td>{{ modulo.nombreComercial }}</td>
-        <td>{{ modulo.modulo }}</td>
-        <td>{{ modulo.zona }}</td>
-        <td>{{ modulo.ubicacion }}</td>
-        <td>
+        <td style="text-align: center">
+          {{ modulo.nombreComercial }}
+        </td>
+        <td style="text-align: center">{{ modulo.modulo }}</td>
+        <td style="text-align: center">{{ modulo.zona }}</td>
+        <td style="text-align: center">{{ modulo.ubicacion }}</td>
+        <td style="text-align: center">
           <span class="font-bold">{{ modulo.cantCamaras }}</span>
         </td>
-        <td>
+        <td style="text-align: center">
           <p-tag
             [value]="modulo.estado"
             [severity]="modulo.estado === 'Activo' ? 'success' : 'danger'"
@@ -207,13 +213,6 @@
           </div>
         </td>
       </tr>
-    </ng-template>
-    <ng-template #paginatorleft let-state>
-      <span>
-        Mostrando {{ 3 }} al
-        {{ 3 }}
-        de {{ 3 }} módulos
-      </span>
     </ng-template>
   </p-table>
 </div>

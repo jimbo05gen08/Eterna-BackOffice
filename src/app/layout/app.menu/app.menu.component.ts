@@ -20,6 +20,7 @@ export class AppMenu {
   router = inject(Router);
   configurationItems: MenuItem[] = [];
   options: MenuItem[] = [];
+  loggingOut = false;
   layoutService = inject(LayoutService);
   private authService = inject(AuthService);
   private userService = inject(UserService);
@@ -51,15 +52,31 @@ export class AppMenu {
       item.state = { route: node.ruta };
     }
     if (node.children?.length) {
-      item.expanded = true;
       item.items = node.children.map((child) => this.mapMenuNode(child));
     }
     return item;
   }
 
   logout() {
+    this.loggingOut = true;
+    const logoutItem = this.configurationItems.find(
+      (item) => item.label === "Cerrar Sesión",
+    );
+    if (logoutItem) {
+      logoutItem.icon = "pi pi-spin pi-spinner";
+      logoutItem.label = "Cerrando sesión...";
+      logoutItem.disabled = true;
+    }
     this.authService.logout().subscribe({
       next: () => this.router.navigate(["/auth/login"]),
+      error: () => {
+        this.loggingOut = false;
+        if (logoutItem) {
+          logoutItem.icon = "pi pi-sign-out";
+          logoutItem.label = "Cerrar Sesión";
+          logoutItem.disabled = false;
+        }
+      },
     });
   }
 }

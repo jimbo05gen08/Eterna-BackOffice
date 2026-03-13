@@ -7,7 +7,8 @@ body {
     background-color: #eefbf2;
 }
 
-.app-dark>body {
+.app-dark>body,
+.app-dark .bg-gray-50 {
     background-color: #222222;
 }
 
@@ -67,6 +68,8 @@ body {
         }
     }
 }
+
+
 
 /* Sobrescribir comportamiento de Sakai para modo Mini Sidebar */
 @media (min-width: 992px) {

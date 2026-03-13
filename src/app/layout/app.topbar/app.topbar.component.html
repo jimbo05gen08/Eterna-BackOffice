@@ -53,21 +53,32 @@
         cursor: pointer;
       "
       class="user-menu"
-      (click)="menu.toggle($event)"
+      (click)="!loggingOut && menu.toggle($event)"
       class="user-menu-trigger"
     >
-      <p-avatar
-        [style]="{ 'background-color': '#073620', color: 'white' }"
-        label="J"
-        shape="circle"
-        size="large"
-      >
-      </p-avatar>
+      @if (loggingOut) {
+        <i class="pi pi-spin pi-spinner text-xl"></i>
+        <div class="user-info" style="margin-left: 10px">
+          <div class="user-name" style="font-weight: bold">
+            Cerrando sesión...
+          </div>
+        </div>
+      } @else {
+        <p-avatar
+          [style]="{ 'background-color': '#073620', color: 'white' }"
+          [label]="userInitial"
+          shape="circle"
+          size="large"
+        >
+        </p-avatar>
 
-      <div class="user-info" style="margin-left: 10px">
-        <div class="user-name" style="font-weight: bold">Jimmy Obregón</div>
-        <div class="user-role" style="font-size: smaller">Administrador</div>
-      </div>
+        <div class="user-info" style="margin-left: 10px">
+          <div class="user-name" style="font-weight: bold">{{ userName }}</div>
+          <div class="user-role" style="font-weight: smaller">
+            Administrador
+          </div>
+        </div>
+      }
 
       <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
     </div>

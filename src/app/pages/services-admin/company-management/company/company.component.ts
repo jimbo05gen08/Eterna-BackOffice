@@ -21,6 +21,7 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { CompanyService as CompanyServiceModel } from "@/app/shared/models/company-service";
 import { CompanyService } from "@/app/core/services/company.service";
 import { Company } from "@/app/shared/models/company";
+import { SkeletonModule } from "primeng/skeleton";
 
 interface Column {
   field: string;
@@ -55,14 +56,16 @@ interface ExportColumn {
     InputIconModule,
     IconFieldModule,
     ConfirmDialogModule,
+    SkeletonModule,
   ],
-  templateUrl: "./company.html",
+  templateUrl: "./company.component.html",
   providers: [MessageService, ConfirmationService],
 })
 export default class CompanyComponent implements OnInit {
+  tableIsLoading: boolean = false;
   companyDialog: boolean = false;
 
-  companies = signal<Company[]>([]);
+  companies = signal<Company[]>([{} as Company]);
 
   company!: Company;
 
@@ -93,8 +96,14 @@ export default class CompanyComponent implements OnInit {
   }
 
   loadCompanies() {
-    this.companyService.getEmpresas().subscribe((companies) => {
-      this.companies.set(companies);
+    this.tableIsLoading = true;
+    this.companyService.getEmpresas().subscribe({
+      next: (companies) => {
+        this.companies.set(companies);
+        this.tableIsLoading = false;
+      },
+      error: () => (this.tableIsLoading = false),
+      complete: () => (this.tableIsLoading = false),
     });
 
     this.cols = [
@@ -211,7 +220,7 @@ export default class CompanyComponent implements OnInit {
   saveCompany() {
     this.submitted = true;
     let _companies = this.companies();
-    if (this.company.nombreComercial?.trim()) {
+    if (this.company.nombre_comercial?.trim()) {
       if (this.company.id) {
         _companies[this.findIndexById(this.company.id)] = this.company;
         this.companies.set([..._companies]);

@@ -1,6 +1,8 @@
 export interface User {
   id: number;
   email: string;
+  nombre: string;
+  emailConfirmed: string;
   flg_superadmin: boolean;
   empresas: Company[];
   perm_version: number;
