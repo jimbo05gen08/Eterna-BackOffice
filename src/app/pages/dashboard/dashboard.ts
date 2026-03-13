@@ -1,7 +1,4 @@
 import { Component } from "@angular/core";
-import { StatsWidget } from "./components/statswidget";
-import { BestSellingWidget } from "./components/bestsellingwidget";
-import { RevenueStreamWidget } from "./components/revenuestreamwidget";
 
 @Component({
   selector: "app-dashboard",
@@ -25,4 +22,4 @@ import { RevenueStreamWidget } from "./components/revenuestreamwidget";
     </div>
   `,
 })
-export class Dashboard {}
+export default class Dashboard {}

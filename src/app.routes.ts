@@ -1,8 +1,7 @@
 import { Routes } from "@angular/router";
 import { AppLayout } from "./app/layout/app.layout";
-import { Dashboard } from "./app/pages/dashboard/dashboard";
 import { Notfound } from "./app/shared/components/notfound/notfound";
-import { authGuard } from "./app/core/guards/auth.guard";
+import { authGuard, permissionGuard } from "./app/core/guards/auth.guard";
 
 export const appRoutes: Routes = [
   {
@@ -10,82 +9,89 @@ export const appRoutes: Routes = [
     component: AppLayout,
     canActivate: [authGuard],
     children: [
-      { path: "", component: Dashboard },
+      { path: "", redirectTo: "/dashboard", pathMatch: "full" },
       {
-        path: "pages",
-        loadChildren: () => import("./app/pages/pages.routes"),
+        path: "dashboard",
+        canActivate: [permissionGuard],
+        loadComponent: () => import("./app/pages/dashboard/dashboard"),
       },
       {
-        path: "company-management",
+        path: "admin-servicios",
         children: [
           {
-            path: "company",
+            path: "empresas",
+            canActivate: [permissionGuard],
             loadComponent: () =>
-              import("./app/pages/company-management/company/company.component"),
-          },
-          {
-            path: "company-services",
-            loadComponent: () =>
-              import("./app/pages/company-management/company-services/company-services"),
+              import("./app/pages/services-admin/company-management/company/company.component"),
           },
         ],
       },
       {
-        path: "streaming-management",
+        path: "gestion-servicios",
         children: [
           {
-            path: "services",
-            loadComponent: () =>
-              import("./app/pages/streaming-management/service-list/service-list.component"),
+            path: "transmisiones",
+            children: [
+              {
+                path: "servicios",
+                canActivate: [permissionGuard],
+                loadComponent: () =>
+                  import("./app/pages/services-management/streaming-management/service-list/service-list.component"),
+              },
+              {
+                path: "camaras",
+                canActivate: [permissionGuard],
+                loadComponent: () =>
+                  import("./app/pages/services-management/streaming-management/modules/modules.component"),
+              },
+            ],
           },
           {
-            path: "modules",
+            path: "salones-velatorios",
+            children: [
+              {
+                path: "servicios",
+                canActivate: [permissionGuard],
+                loadComponent: () =>
+                  import("./app/pages/services-management/funeral-halls-management/service-list/funeral-hall-service-list.component"),
+              },
+              {
+                path: "salones",
+                canActivate: [permissionGuard],
+                loadComponent: () =>
+                  import("./app/pages/services-management/funeral-halls-management/funeral-halls/funeral-halls.component"),
+              },
+            ],
+          },
+          {
+            path: "cuentas-eterna",
+            canActivate: [permissionGuard],
             loadComponent: () =>
-              import("./app/pages/streaming-management/modules/modules.component"),
+              import("./app/pages/services-management/account-management/accounts/accounts.component"),
           },
         ],
       },
       {
-        path: "funeral-halls-management",
+        path: "configuracion",
         children: [
           {
-            path: "services",
+            path: "gestion-perfil",
             loadComponent: () =>
-              import("./app/pages/funeral-halls-management/service-list/funeral-hall-service-list.component"),
+              import("./app/pages/configuration/profile-management/profile-management"),
           },
           {
-            path: "funeral-halls",
+            path: "gestion-usuario",
             loadComponent: () =>
-              import("./app/pages/funeral-halls-management/funeral-halls/funeral-halls.component"),
-          },
-        ],
-      },
-      {
-        path: "account-management",
-        children: [
-          {
-            path: "murals-list",
-            loadComponent: () =>
-              import("./app/pages/account-management/mural-list/mural-list.component"),
-          },
-          {
-            path: "accounts",
-            loadComponent: () =>
-              import("./app/pages/account-management/accounts/accounts.component"),
-          },
-          {
-            path: "digital-heir",
-            loadComponent: () =>
-              import("./app/pages/account-management/digital-heir/digital-heir.component"),
+              import("./app/pages/configuration/user-management/user-management"),
           },
         ],
       },
     ],
   },
-  { path: "notfound", component: Notfound },
   {
     path: "auth",
     loadChildren: () => import("./app/pages/auth/auth.routes"),
   },
+  { path: "notfound", component: Notfound },
   { path: "**", redirectTo: "/notfound" },
 ];

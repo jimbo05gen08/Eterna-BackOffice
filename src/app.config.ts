@@ -18,6 +18,7 @@ import { appRoutes } from "./app.routes";
 import { definePreset } from "@primeuix/themes";
 import { MessageService } from "primeng/api";
 import { authInterceptor } from "./app/core/interceptors/auth.interceptor";
+import { errorInterceptor } from "./app/core/interceptors/error.interceptor";
 
 const MiTemaPersonalizado = definePreset(Aura, {
   semantic: {
@@ -85,7 +86,10 @@ export const appConfig: ApplicationConfig = {
       }),
       withEnabledBlockingInitialNavigation(),
     ),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([errorInterceptor, authInterceptor]),
+    ),
     provideZonelessChangeDetection(),
     providePrimeNG({
       theme: {

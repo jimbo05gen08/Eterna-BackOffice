@@ -6,6 +6,8 @@ import { PanelMenu } from "primeng/panelmenu";
 import { TooltipModule } from "primeng/tooltip";
 import { LayoutService } from "../../core/services/layout.service";
 import { AuthService } from "../../core/services/auth.service";
+import { UserService } from "../../core/services/user.service";
+import { MenuNode } from "@/app/shared/models/user";
 
 @Component({
   selector: "app-menu",
@@ -20,23 +22,14 @@ export class AppMenu {
   options: MenuItem[] = [];
   layoutService = inject(LayoutService);
   private authService = inject(AuthService);
+  private userService = inject(UserService);
 
   ngOnInit() {
+    const user = this.userService.getCurrentStoredUser();
+    const menu = user?.menu;
+
     this.configurationItems = [
-      {
-        label: "Configuración",
-        icon: "pi pi-cog",
-        items: [
-          {
-            label: "Gestión de Perfiles",
-            icon: "pi pi-user",
-          },
-          {
-            label: "Gestión de Usuarios",
-            icon: "pi pi-users",
-          },
-        ],
-      },
+      ...(menu?.config_items ?? []).map((node) => this.mapMenuNode(node)),
       {
         label: "Cerrar Sesión",
         icon: "pi pi-sign-out",
@@ -44,77 +37,24 @@ export class AppMenu {
       },
     ];
 
-    this.options = [
-      {
-        label: "Gestión Empresa",
-        icon: "pi pi-building-columns",
-        items: [
-          {
-            label: "Empresas",
-            icon: "pi pi-building",
-            routerLink: ["/company-management/company"],
-          },
-          {
-            label: "Servicios Empresa",
-            icon: "pi pi-briefcase",
-            routerLink: ["/company-management/company-services"],
-          },
-        ],
-      },
-      {
-        label: "Gestión de Transmisiones",
-        icon: "pi pi-desktop",
-        items: [
-          {
-            label: "Lista de Servicios",
-            icon: "pi pi-list",
-            routerLink: ["/streaming-management/services"],
-          },
-          {
-            label: "Módulos y Cámaras",
-            icon: "pi pi-video",
-            routerLink: ["/streaming-management/modules"],
-          },
-        ],
-      },
-      {
-        label: "Gestión de Salones Velatorios",
-        icon: "pi pi-objects-column",
-        items: [
-          {
-            label: "Lista de Servicios",
-            icon: "pi pi-list",
-            routerLink: ["/funeral-halls-management/services"],
-          },
-          {
-            label: "Velatorios y Pantallas",
-            icon: "pi pi-desktop",
-            routerLink: ["/funeral-halls-management/funeral-halls"],
-          },
-        ],
-      },
-      {
-        label: "Gestión de Cuentas",
-        icon: "pi pi-address-book",
-        items: [
-          {
-            label: "Lista de Murales",
-            icon: "pi pi-images",
-            routerLink: ["/account-management/murals-list"],
-          },
-          {
-            label: "Cuentas",
-            icon: "pi pi-fw pi-user",
-            routerLink: ["/account-management/accounts"],
-          },
-          {
-            label: "Heredero Digital",
-            icon: "pi pi-crown",
-            routerLink: ["/account-management/digital-heir"],
-          },
-        ],
-      },
-    ];
+    this.options = (menu?.menu_items ?? []).map((node) =>
+      this.mapMenuNode(node),
+    );
+  }
+
+  private mapMenuNode(node: MenuNode): MenuItem {
+    const item: MenuItem = {
+      label: node.nombre,
+      icon: node.icon,
+    };
+    if (node.ruta) {
+      item.state = { route: node.ruta };
+    }
+    if (node.children?.length) {
+      item.expanded = true;
+      item.items = node.children.map((child) => this.mapMenuNode(child));
+    }
+    return item;
   }
 
   logout() {

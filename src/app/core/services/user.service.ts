@@ -26,4 +26,8 @@ export class UserService extends BaseService {
       }),
     );
   }
+
+  getCurrentStoredUser(): User | null {
+    return this.getCurrentUser();
+  }
 }

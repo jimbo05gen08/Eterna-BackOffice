@@ -75,9 +75,10 @@ export class AuthService extends BaseService {
         refreshToken,
       })
       .pipe(
-        map((response) => {
+        map(() => {
           this.removeApiToken();
-          return this.handleAndGetSuccess(response);
+          this.toastMessageService.showSuccess("Sesión cerrada");
+          return true;
         }),
       );
   }

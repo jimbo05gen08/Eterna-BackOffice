@@ -5,7 +5,7 @@ export interface User {
   empresas: Company[];
   perm_version: number;
   acciones_por_recurso: ResourceAction[];
-  menu: MenuNode[];
+  menu: MenuItems;
 }
 
 export interface Company {
@@ -22,9 +22,15 @@ export interface ResourceAction {
   acciones: string[];
 }
 
+export interface MenuItems {
+  menu_items: MenuNode[];
+  config_items: MenuNode[];
+}
+
 export interface MenuNode {
   code: string;
   nombre: string;
+  icon: string;
   ruta?: string;
   acciones: string[];
   children: MenuNode[];

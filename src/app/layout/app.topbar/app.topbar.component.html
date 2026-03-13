@@ -8,7 +8,11 @@
     </button>
     <a class="layout-topbar-logo" routerLink="/">
       <img
-        [src]="layoutService.isDarkTheme() ? '../../../assets/eterna-assets/logo_amarillo.svg' : '../../../assets/eterna-assets/logo_verde.svg'"
+        [src]="
+          layoutService.isDarkTheme()
+            ? '../../../assets/eterna-assets/logo_amarillo.svg'
+            : '../../../assets/eterna-assets/logo_verde.svg'
+        "
         alt=""
         width="100px"
       />
@@ -23,7 +27,11 @@
         (click)="toggleDarkMode()"
       >
         <i
-          [ngClass]="{'pi': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme()}"
+          [ngClass]="{
+            pi: true,
+            'pi-moon': layoutService.isDarkTheme(),
+            'pi-sun': !layoutService.isDarkTheme(),
+          }"
         ></i>
       </button>
 

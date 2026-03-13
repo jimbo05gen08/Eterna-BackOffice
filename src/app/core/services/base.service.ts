@@ -118,19 +118,11 @@ export abstract class BaseService {
       | typeof this.getDataFromApiResponse
       | typeof this.getSuccessFromApiResponse,
   ): T | boolean {
-    if (!apiResponse.error) {
-      if (!ignoreMessage && apiResponse.success?.mensaje) {
-        this.showNotification("success", apiResponse.success.mensaje);
-      }
-
-      return fn(apiResponse);
-    } else {
-      if (!ignoreMessage) {
-        this.showNotification("error", apiResponse.error?.mensaje);
-        throw new Error(apiResponse.error?.mensaje);
-      }
-      return undefined as T;
+    if (!ignoreMessage && apiResponse.success?.mensaje) {
+      this.showNotification("success", apiResponse.success.mensaje);
     }
+
+    return fn(apiResponse);
   }
 
   private showNotification(

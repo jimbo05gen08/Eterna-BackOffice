@@ -3,28 +3,33 @@
     <p-panelMenu [model]="options" class="w-full border-none">
       <ng-template #item let-item>
         <a
-          [routerLink]="item.routerLink"
+          [routerLink]="item.state?.route"
           routerLinkActive="active-link"
           class="flex items-start px-3 py-3 cursor-pointer custom-hover no-underline"
-					[ngClass]="{'no-padding-x': !layoutService.layoutState().menuHoverActive}"
+          [ngClass]="{
+            'no-padding-x': !layoutService.layoutState().menuHoverActive,
+          }"
         >
           <div class="menu-icon-container">
             <span [class]="item.icon" class="text-xl text-white mt-1"> </span>
           </div>
           <div
             class="menu-content-wrapper"
-            [class.menu-content-collapsed]="!layoutService.isMenuExpanded() && !layoutService.layoutState().menuHoverActive"
+            [class.menu-content-collapsed]="
+              !layoutService.isMenuExpanded() &&
+              !layoutService.layoutState().menuHoverActive
+            "
           >
             <span class="text-white ml-3 font-medium flex-1 multiline-label">
               {{ item.label }}
             </span>
 
             @if (item.items) {
-            <i
-              class="pi pi-chevron-down text-xs text-white ml-2 mt-1 arrow-icon"
-              [class.arrow-expanded]="item.expanded"
-            >
-            </i>
+              <i
+                class="pi pi-chevron-down text-xs text-white ml-2 mt-1 arrow-icon"
+                [class.arrow-expanded]="item.expanded"
+              >
+              </i>
             }
           </div>
         </a>
@@ -33,25 +38,38 @@
   </div>
 
   <div class="mt-auto border-t border-white/10 py-2">
-    <p-panelMenu [model]="configurationItems" class="w-full text-white">
+    <p-panelMenu [model]="configurationItems" class="w-full border-none">
       <ng-template #item let-item>
         <a
-          [routerLink]="item.routerLink"
-          class="flex items-center px-3 py-3 cursor-pointer custom-hover"
-          [ngClass]="{'justify-center': !layoutService.isMenuExpanded(), 'justify-start': layoutService.isMenuExpanded()}"
+          [routerLink]="item.state?.route"
+          routerLinkActive="active-link"
+          class="flex items-start px-3 py-3 cursor-pointer custom-hover no-underline"
+          [ngClass]="{
+            'no-padding-x': !layoutService.layoutState().menuHoverActive,
+          }"
         >
-          <span
-            [class]="item.icon"
-            class="text-xl"
-            [pTooltip]="!layoutService.isMenuExpanded() ? item.label : ''"
-            tooltipPosition="right"
+          <div class="menu-icon-container">
+            <span [class]="item.icon" class="text-xl text-white mt-1"> </span>
+          </div>
+          <div
+            class="menu-content-wrapper"
+            [class.menu-content-collapsed]="
+              !layoutService.isMenuExpanded() &&
+              !layoutService.layoutState().menuHoverActive
+            "
           >
-          </span>
+            <span class="text-white ml-3 font-medium flex-1 multiline-label">
+              {{ item.label }}
+            </span>
 
-          @if (layoutService.isMenuExpanded() ||
-          layoutService.layoutState().menuHoverActive) {
-          <span class="text-white ml-3 font-medium">{{ item.label }}</span>
-          }
+            @if (item.items) {
+              <i
+                class="pi pi-chevron-down text-xs text-white ml-2 mt-1 arrow-icon"
+                [class.arrow-expanded]="item.expanded"
+              >
+              </i>
+            }
+          </div>
         </a>
       </ng-template>
     </p-panelMenu>

@@ -1,0 +1,295 @@
+<p-toolbar class="mb-6">
+  <ng-template #start>
+    <button
+      pButton
+      label="Nuevo"
+      class="mr-2"
+      icon="pi pi-plus"
+      (onClick)="openNew()"
+    ></button>
+    <p-button
+      severity="danger"
+      label="Eliminar"
+      icon="pi pi-trash"
+      outlined
+      (onClick)="deleteSelectedProducts()"
+      [disabled]="!selectedCompanies || !selectedCompanies.length"
+    />
+  </ng-template>
+
+  <ng-template #end>
+    <p-button
+      label="Exportar"
+      icon="pi pi-upload"
+      severity="secondary"
+      (onClick)="exportCSV()"
+    />
+  </ng-template>
+</p-toolbar>
+<p-table
+  #dt
+  [value]="companies()"
+  [rows]="10"
+  [columns]="cols"
+  [paginator]="true"
+  [globalFilterFields]="['razonSocial', 'nombreComercial', 'ruc']"
+  [tableStyle]="{ 'min-width': '75rem' }"
+  [(selection)]="selectedCompanies"
+  [rowHover]="true"
+  dataKey="id"
+  currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} empresas"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+>
+  <ng-template #caption>
+    <div class="flex items-center justify-between">
+      <h5 class="m-0">Gestión de Empresas</h5>
+      <p-iconfield>
+        <p-inputicon class="pi pi-search" />
+        <input
+          pInputText
+          type="text"
+          (input)="onGlobalFilter(dt, $event)"
+          placeholder="Buscar..."
+        />
+      </p-iconfield>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
+      <th pSortableColumn="ruc">RUC<p-sortIcon field="ruc" /></th>
+      <th pSortableColumn="razonSocial">
+        Razón Social
+        <p-sortIcon field="razonSocial" />
+      </th>
+      <th pSortableColumn="nombreComercial">
+        Nombre Comercial
+        <p-sortIcon field="nombreComercial" />
+      </th>
+      <th pSortableColumn="correoContacto">
+        Correo Contacto
+        <p-sortIcon field="correoContacto" />
+      </th>
+      <th pSortableColumn="telefonoContacto">
+        Teléfono Contacto
+        <p-sortIcon field="telefonoContacto" />
+      </th>
+      <th pSortableColumn="direccion">
+        Dirección
+        <p-sortIcon field="direccion" />
+      </th>
+      <th pSortableColumn="representanteLegal" style="min-width: 13rem">
+        Representante Legal
+        <p-sortIcon field="representanteLegal" />
+      </th>
+      <th pSortableColumn="url">
+        URL
+        <p-sortIcon field="url" />
+      </th>
+      <th pSortableColumn="pais">
+        País
+        <p-sortIcon field="pais" />
+      </th>
+      <th pSortableColumn="estado">
+        Estado
+        <p-sortIcon field="estado" />
+      </th>
+      <th style="min-width: 8rem"></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-company>
+    <tr>
+      <td style="width: 3rem">
+        <p-tableCheckbox [value]="company" />
+      </td>
+      <td>{{ company.ruc }}</td>
+      <td style="min-width: 16rem">{{ company.razonSocial }}</td>
+      <td style="min-width: 12rem">{{ company.nombreComercial}}</td>
+      <td style="min-width: 12rem">{{ company.correoContacto}}</td>
+      <td style="min-width: 12rem">{{ company.telefonoContacto}}</td>
+      <td style="min-width: 12rem">{{ company.direccion}}</td>
+      <td style="min-width: 12rem">{{ company.representanteLegal}}</td>
+      <td style="min-width: 12rem">
+        <a class="text-primary" [href]="company.url" target="_blank"
+          >{{ company.url}}</a
+        >
+      </td>
+      <td style="min-width: 12rem">{{ company.pais}}</td>
+      <td style="min-width: 12rem">{{ company.estado}}</td>
+      <td>
+        <p-button
+          icon="pi pi-pencil"
+          class="mr-2"
+          [rounded]="true"
+          [outlined]="true"
+          (click)="editProduct(company)"
+        />
+        <p-button
+          icon="pi pi-trash"
+          severity="danger"
+          [rounded]="true"
+          [outlined]="true"
+          (click)="deleteProduct(company)"
+        />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [(visible)]="companyDialog"
+  [style]="{ width: '450px' }"
+  header="Detalles de Empresa"
+  [modal]="true"
+>
+  <ng-template #content>
+    <div class="flex flex-col gap-6">
+      <!-- RUC -->
+      <div>
+        <label class="block font-bold mb-3">RUC</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="company.ruc"
+          required
+          fluid
+        />
+        @if (submitted && !company.ruc) {
+        <small class="text-red-500">El RUC es obligatorio</small>
+        }
+      </div>
+
+      <!-- Razón Social -->
+      <div>
+        <label class="block font-bold mb-3">Razón Social</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="company.razon_social"
+          required
+          fluid
+        />
+        @if (submitted && !company.razon_social) {
+        <small class="text-red-500">La Razón Social es obligatoria</small>
+        }
+      </div>
+
+      <!-- Nombre Comercial -->
+      <div>
+        <label class="block font-bold mb-3">Nombre Comercial</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="company.nombreComercial"
+          required
+          fluid
+        />
+        @if (submitted && !company.nombreComercial) {
+        <small class="text-red-500">El Nombre Comercial es obligatorio</small>
+        }
+      </div>
+
+      <!-- Correo Contacto -->
+      <div>
+        <label class="block font-bold mb-3">Correo de Contacto</label>
+        <input
+          type="email"
+          pInputText
+          [(ngModel)]="company.correoContacto"
+          required
+          fluid
+        />
+        @if (submitted && !company.correoContacto) {
+        <small class="text-red-500">El correo es obligatorio</small>
+        }
+      </div>
+
+      <!-- Teléfono Contacto -->
+      <div>
+        <label class="block font-bold mb-3">Teléfono de Contacto</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="company.telefonoContacto"
+          required
+          fluid
+        />
+        @if (submitted && !company.telefonoContacto) {
+        <small class="text-red-500">El teléfono es obligatorio</small>
+        }
+      </div>
+
+      <!-- Dirección -->
+      <div>
+        <label class="block font-bold mb-3">Dirección</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="company.direccion"
+          required
+          fluid
+        />
+        @if (submitted && !company.direccion) {
+        <small class="text-red-500">La dirección es obligatoria</small>
+        }
+      </div>
+
+      <!-- Representante Legal -->
+      <div>
+        <label class="block font-bold mb-3">Representante Legal</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="company.representanteLegal"
+          required
+          fluid
+        />
+        @if (submitted && !company.representanteLegal) {
+        <small class="text-red-500"
+          >El representante legal es obligatorio</small
+        >
+        }
+      </div>
+
+      <!-- URL -->
+      <div>
+        <label class="block font-bold mb-3">URL</label>
+        <input type="text" pInputText [(ngModel)]="company.url" fluid />
+      </div>
+
+      <!-- País -->
+      <div>
+        <label class="block font-bold mb-3">País</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="company.pais"
+          required
+          fluid
+        />
+        @if (submitted && !company.pais) {
+        <small class="text-red-500">El país es obligatorio</small>
+        }
+      </div>
+
+      <!-- Estado -->
+      <div>
+        <label class="block font-bold mb-3">Estado</label>
+        <select pInputText [(ngModel)]="company.estado" required class="w-full">
+          <option value="">Seleccione</option>
+          <option value="Activo">Activo</option>
+          <option value="Inactivo">Inactivo</option>
+        </select>
+        @if (submitted && !company.estado) {
+        <small class="text-red-500">El estado es obligatorio</small>
+        }
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #footer>
+    <p-button label="Cancelar" icon="pi pi-times" text (click)="hideDialog()" />
+    <p-button label="Guardar" icon="pi pi-check" (click)="saveCompany()" />
+  </ng-template>
+</p-dialog>
+<p-confirmdialog [style]="{ width: '450px' }" />

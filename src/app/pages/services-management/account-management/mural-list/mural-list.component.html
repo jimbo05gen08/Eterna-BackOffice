@@ -1,0 +1,267 @@
+<p-toolbar class="mb-6">
+  <ng-template #start> </ng-template>
+
+  <ng-template #end>
+    <p-button
+      label="Exportar"
+      icon="pi pi-upload"
+      severity="secondary"
+      (onClick)="exportCSV()"
+    />
+  </ng-template>
+</p-toolbar>
+<p-table
+  #dt
+  [value]="murals()"
+  [rows]="10"
+  [columns]="cols"
+  [paginator]="true"
+  [globalFilterFields]="['razonSocial', 'nombreComercial', 'ruc']"
+  [tableStyle]="{ 'min-width': '75rem' }"
+  [(selection)]="selectedMurals"
+  [rowHover]="true"
+  dataKey="id"
+  currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} murales"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+>
+  <ng-template #caption>
+    <div class="flex items-center justify-between">
+      <h5 class="m-0">Gestión de Murales</h5>
+      <p-iconfield>
+        <p-inputicon class="pi pi-search" />
+        <input
+          pInputText
+          type="text"
+          (input)="onGlobalFilter(dt, $event)"
+          placeholder="Buscar..."
+        />
+      </p-iconfield>
+    </div>
+  </ng-template>
+
+  <ng-template #header>
+    <tr>
+      <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
+      <th pSortableColumn="nombreComercial">
+        Nombre Comercial <p-sortIcon field="nombreComercial" />
+      </th>
+      <th pSortableColumn="identificador">
+        Identificador <p-sortIcon field="identificador" />
+      </th>
+      <th pSortableColumn="beneficiario">
+        Beneficiario <p-sortIcon field="beneficiario" />
+      </th>
+      <th pSortableColumn="fechaNacimiento">
+        Fecha Nacimiento <p-sortIcon field="fechaNacimiento" />
+      </th>
+      <th pSortableColumn="fechaDefuncion">
+        Fecha Defunción <p-sortIcon field="fechaDefuncion" />
+      </th>
+      <th>F Perfil | F Portada</th>
+      <th>Txt Corto | Txt Largo</th>
+      <th pSortableColumn="estadoMural">
+        Estado Mural <p-sortIcon field="estadoMural" />
+      </th>
+      <th pSortableColumn="urlPublica">
+        Url Publica <p-sortIcon field="urlPublica" />
+      </th>
+      <th pSortableColumn="fechaCreacion">
+        Fecha Creación <p-sortIcon field="fechaCreacion" />
+      </th>
+      <th pSortableColumn="creador">Creador <p-sortIcon field="creador" /></th>
+      <th style="min-width: 8rem">Accion</th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-mural>
+    <tr>
+      <td>
+        <p-tableCheckbox [value]="mural" />
+      </td>
+      <td>{{ mural.nombreComercial }}</td>
+      <td>{{ mural.identificador }}</td>
+      <td>{{ mural.beneficiario }}</td>
+      <td>{{ mural.fechaNacimiento | date: "d/MM/yyyy" }}</td>
+      <td>{{ mural.fechaDefuncion | date: "d/MM/yyyy" }}</td>
+      <td class="text-center">
+        <i
+          [class]="
+            mural.tienePerfil
+              ? 'pi pi-check-circle text-green-500'
+              : 'pi pi-times-circle text-red-500'
+          "
+        ></i>
+        <span class="mx-2">|</span>
+        <i
+          [class]="
+            mural.tienePortada
+              ? 'pi pi-check-circle text-green-500'
+              : 'pi pi-times-circle text-red-500'
+          "
+        ></i>
+      </td>
+      <td class="text-center">
+        <i
+          [class]="
+            mural.tieneTxtCorto
+              ? 'pi pi-check-circle text-green-500'
+              : 'pi pi-times-circle text-red-500'
+          "
+        ></i>
+        <span class="mx-2">|</span>
+        <i
+          [class]="
+            mural.tieneTxtLargo
+              ? 'pi pi-check-circle text-green-500'
+              : 'pi pi-times-circle text-red-500'
+          "
+        ></i>
+      </td>
+      <td>{{ mural.estadoMural }}</td>
+      <td>
+        <a
+          [href]="mural.urlPublica"
+          target="_blank"
+          class="no-underline text-blue-500 hover:underline"
+        >
+          {{ mural.urlPublica }}
+        </a>
+      </td>
+      <td>{{ mural.fechaCreacion | date: "dd/MM/yyyy" }}</td>
+      <td>
+        <div class="flex flex-column">
+          <span class="font-bold">{{ mural.creador }}</span>
+          <small class="text-secondary">{{ mural.cuentaCreadora }}</small>
+        </div>
+      </td>
+      <td>
+        <p-button
+          icon="pi pi-file-export"
+          [rounded]="true"
+          [outlined]="true"
+          size="large"
+          (click)="transferMural(mural)"
+        />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [(visible)]="muralDialog"
+  [style]="{ width: '550px' }"
+  header="Detalles del Mural"
+  [modal]="true"
+>
+  <ng-template #content>
+    <div class="flex flex-col gap-4">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-bold mb-2">Nombre Comercial</label>
+          <input
+            type="text"
+            pInputText
+            [(ngModel)]="mural.nombreComercial"
+            required
+            fluid
+          />
+        </div>
+        <div>
+          <label class="block font-bold mb-2">Identificador</label>
+          <input
+            type="text"
+            pInputText
+            [(ngModel)]="mural.identificador"
+            required
+            fluid
+          />
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-bold mb-2">Beneficiario</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="mural.beneficiario"
+          required
+          fluid
+        />
+        @if (submitted && !mural.beneficiario) {
+          <small class="text-red-500">El beneficiario es obligatorio</small>
+        }
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-bold mb-2">Fecha Nacimiento</label>
+          <p-calendar
+            [(ngModel)]="mural.fechaNacimiento"
+            dateFormat="dd/mm/yy"
+            fluid
+          />
+        </div>
+        <div>
+          <label class="block font-bold mb-2">Fecha Defunción</label>
+          <p-calendar
+            [(ngModel)]="mural.fechaDefuncion"
+            dateFormat="dd/mm/yy"
+            fluid
+          />
+        </div>
+      </div>
+
+      <div class="surface-ground p-3 border-round">
+        <label class="block font-bold mb-3 text-primary"
+          >Configuración de Contenido</label
+        >
+        <div class="grid grid-cols-2 gap-4">
+          <div class="flex items-center gap-2">
+            <p-checkbox [(ngModel)]="mural.tienePerfil" />
+            <span>Foto Perfil</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <p-checkbox [(ngModel)]="mural.tienePortada" />
+            <span>Foto Portada</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <p-checkbox [(ngModel)]="mural.tieneTxtCorto" />
+            <span>Texto Corto</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <p-checkbox [(ngModel)]="mural.tieneTxtLargo" />
+            <span>Texto Largo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-bold mb-2">Estado Mural</label>
+          <p-select
+            [options]="['Publico', 'Privado']"
+            [(ngModel)]="mural.estadoMural"
+            fluid
+          />
+        </div>
+        <div>
+          <label class="block font-bold mb-2">URL Pública</label>
+          <input type="text" pInputText [(ngModel)]="mural.urlPublica" fluid />
+        </div>
+      </div>
+
+      <div class="text-sm text-secondary italic">
+        Creado por: {{ mural.creador }} ({{
+          mural.fechaCreacion | date: "dd/MM/yyyy"
+        }})
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Cancelar" icon="pi pi-times" text (click)="hideDialog()" />
+    <p-button label="Guardar Mural" icon="pi pi-check" (click)="saveMural()" />
+  </ng-template>
+</p-dialog>
+<p-confirmdialog [style]="{ width: '450px' }" />

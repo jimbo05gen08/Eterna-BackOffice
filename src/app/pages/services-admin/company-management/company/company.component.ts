@@ -1,4 +1,3 @@
-import { Company } from "../../../shared/models/company";
 import { Component, OnInit, signal, ViewChild } from "@angular/core";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { Table, TableModule } from "primeng/table";
@@ -21,6 +20,7 @@ import { IconFieldModule } from "primeng/iconfield";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { CompanyService as CompanyServiceModel } from "@/app/shared/models/company-service";
 import { CompanyService } from "@/app/core/services/company.service";
+import { Company } from "@/app/shared/models/company";
 
 interface Column {
   field: string;

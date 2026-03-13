@@ -1,0 +1,204 @@
+<p-toolbar class="mb-6">
+  <ng-template #start>
+    <button
+      pButton
+      label="Nuevo"
+      icon="pi pi-plus"
+      class="mr-2"
+      (onClick)="openNew()"
+    ></button>
+    <p-button
+      severity="danger"
+      label="Eliminar"
+      icon="pi pi-trash"
+      outlined
+      (onClick)="deleteSelectedProducts()"
+      [disabled]="!selectedServices || !selectedServices.length"
+    />
+  </ng-template>
+
+  <ng-template #end>
+    <p-button
+      label="Exportar"
+      icon="pi pi-upload"
+      severity="secondary"
+      (onClick)="exportCSV()"
+    />
+  </ng-template>
+</p-toolbar>
+<p-table
+  #dt
+  [value]="services()"
+  [rows]="10"
+  [columns]="cols"
+  [paginator]="true"
+  [globalFilterFields]="['servicio', 'descripcion']"
+  [tableStyle]="{ 'min-width': '75rem' }"
+  [(selection)]="selectedServices"
+  [rowHover]="true"
+  dataKey="id"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} servicios"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+>
+  <ng-template #caption>
+    <div class="flex items-center justify-between">
+      <h5 class="m-0">Gestión de Servicios</h5>
+      <p-iconfield>
+        <p-inputicon class="pi pi-search" />
+        <input
+          pInputText
+          type="text"
+          (input)="onGlobalFilter(dt, $event)"
+          placeholder="Buscar..."
+        />
+      </p-iconfield>
+    </div>
+  </ng-template>
+
+  <ng-template #header>
+    <tr>
+      <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
+      <th pSortableColumn="nombreComercial">
+        Nombre Comercial <p-sortIcon field="nombreComercial" />
+      </th>
+      <th pSortableColumn="modulo">Módulo <p-sortIcon field="modulo" /></th>
+      <th pSortableColumn="identificador">
+        Identificador <p-sortIcon field="identificador" />
+      </th>
+      <th pSortableColumn="beneficiario">
+        Beneficiario <p-sortIcon field="beneficiario" />
+      </th>
+      <th pSortableColumn="fechaHoraAtencion">
+        Fecha Atención <p-sortIcon field="fechaHoraAtencion" />
+      </th>
+      <th pSortableColumn="estadoInvitacion">
+        Estado <p-sortIcon field="estadoInvitacion" />
+      </th>
+      <th style="min-width: 8rem">Acciones</th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-service>
+    <tr>
+      <td><p-tableCheckbox [value]="service" /></td>
+      <td style="min-width: 12rem">{{ service.nombreComercial }}</td>
+      <td style="min-width: 10rem">{{ service.modulo }}</td>
+      <td style="min-width: 12rem">{{ service.identificador }}</td>
+      <td style="min-width: 12rem">{{ service.beneficiario }}</td>
+      <td style="min-width: 10rem">
+        {{ service.fechaHoraAtencion | date: "dd/MM/yyyy HH:mm" }}
+      </td>
+      <td style="min-width: 8rem">
+        <p-tag
+          [value]="service.estadoInvitacion"
+          [severity]="
+            service.estadoInvitacion === 'Enviado' ? 'success' : 'info'
+          "
+        />
+      </td>
+      <td>
+        <p-button
+          icon="pi pi-pencil"
+          class="mr-2"
+          [rounded]="true"
+          [outlined]="true"
+          (click)="editProduct(service)"
+        />
+        <p-button
+          icon="pi pi-trash"
+          severity="danger"
+          [rounded]="true"
+          [outlined]="true"
+          (click)="deleteProduct(service)"
+        />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [(visible)]="serviceDialog"
+  [style]="{ width: '500px' }"
+  header="Detalles del Servicio"
+  [modal]="true"
+>
+  <ng-template #content>
+    <div class="flex flex-col gap-6">
+      <div>
+        <label class="block font-bold mb-3">Nombre Comercial</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="service.nombreComercial"
+          required
+          fluid
+        />
+        @if (submitted && !service.nombreComercial) {
+          <small class="text-red-500">El nombre comercial es obligatorio</small>
+        }
+      </div>
+
+      <div>
+        <label class="block font-bold mb-3">Beneficiario</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="service.beneficiario"
+          required
+          fluid
+        />
+        @if (submitted && !service.beneficiario) {
+          <small class="text-red-500">El beneficiario es obligatorio</small>
+        }
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-bold mb-3">Identificador</label>
+          <input
+            type="text"
+            pInputText
+            [(ngModel)]="service.identificador"
+            fluid
+          />
+        </div>
+        <div>
+          <label class="block font-bold mb-3">Estado</label>
+          <input
+            type="text"
+            pInputText
+            [(ngModel)]="service.estadoInvitacion"
+            fluid
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-bold mb-3">Fecha de Atención</label>
+          <p-calendar
+            [(ngModel)]="service.fechaHoraAtencion"
+            dateFormat="dd/mm/yyyy hh:MM"
+            fluid
+          />
+        </div>
+        <div>
+          <label class="block font-bold mb-3">Fecha de Defunción</label>
+          <p-calendar
+            [(ngModel)]="service.fechaDefuncion"
+            dateFormat="dd/mm/yy"
+            fluid
+          />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Cancelar" icon="pi pi-times" text (click)="hideDialog()" />
+    <p-button label="Guardar" icon="pi pi-check" (click)="saveProduct()" />
+  </ng-template>
+</p-dialog>
+
+<p-confirmdialog [style]="{ width: '450px' }" />
