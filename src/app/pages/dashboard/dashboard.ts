@@ -4,9 +4,21 @@ import { Component } from "@angular/core";
   selector: "app-dashboard",
   template: `
     <div
-      style="display:flex;justify-content:center;align-items:center;width:100%; height: 600px;position:relative"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 600px;
+        position: relative;
+        background-image: url('../../../assets/eterna-assets/Frame 20-3.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 10px;
+      "
     >
-      <div style="position: absolute;top:100px;text-align:center">
+      <div style="text-align: center">
         <h3 style="color: white;">Bienvenido a Eterna BackOffice</h3>
         <img
           src="../../../assets/eterna-assets/logo_verde.svg"
@@ -14,11 +26,6 @@ import { Component } from "@angular/core";
           style="margin-left: 70px;"
         />
       </div>
-      <img
-        src="../../../assets/eterna-assets/Frame 20-3.png"
-        alt=""
-        width="500px"
-      />
     </div>
   `,
 })
